@@ -1,1 +1,1 @@
-celery -A models.photos worker --loglevel=info
+celery -A travelog.photos.tasks worker --loglevel=info

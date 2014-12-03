@@ -6,6 +6,8 @@ from flask.ext import restful
 
 from models import load_photo_json, new_photo_placeholder, upload_image, add_tags, delete_photo
 
+from app import app
+
 class Photo(restful.Resource):
         
     def get(self, photo_id):

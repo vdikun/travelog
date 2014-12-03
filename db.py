@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from contextlib import closing
 import sqlite3
 from travelog import config
+from app import app 
 
 Base = declarative_base()
 engine = create_engine(config.DATABASEURI)
@@ -24,7 +25,8 @@ class PhotoTag(Base):
     __table__ = Table('phototag', metadata, autoload=True)
     
 def connect_db():
-    db = sqlite3.connect(config.DATABASE)
+    print "connect_db: %s" % app.config['DATABASE']
+    db = sqlite3.connect(app.config['DATABASE'])
     db.cursor().executescript("PRAGMA foreign_keys = ON;") # should implement delete-cascade but doesn't
     return db
     

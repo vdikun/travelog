@@ -1,4 +1,4 @@
-""" some tasks handled asynchronously by celery """
+""" some photo tasks which are handled asynchronously by celery """
 
 from celery import Celery
 celeryapp = Celery('photos', broker='amqp://guest@localhost//')

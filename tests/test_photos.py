@@ -6,10 +6,11 @@ from nose.tools import nottest
 from mock import Mock, patch
 
 # domain stuff
-from photos import *
-#import tasks
-from tasks import update_photo_metadata
-from db import Photo, Tag, PhotoTag, init_test_db
+from models.photos import *
+from models.tasks import update_photo_metadata
+from app import make_app
+from db import Photo, Tag, PhotoTag
+import db
 import shutil, os
 import config
 
@@ -29,7 +30,9 @@ class TestPhotoFunctions:
     @classmethod
     def setup_class(self):
         # set up test db
-        init_test_db()
+        app = make_app()
+        assert(app)
+        db.init_test_db(app)
         # copy images from ./img/ to ./test/
         shutil.copytree(IMG_DIR, TEST_IMG_DIR)
         
@@ -39,7 +42,7 @@ class TestPhotoFunctions:
         shutil.rmtree(IMG_DIR)
         shutil.copytree(TEST_IMG_DIR, IMG_DIR)
         shutil.rmtree(TEST_IMG_DIR)
-
+    
     def test_new_photo_placeholder(self):
         photo = new_photo_placeholder()
         assert(photo.id == 4) # kind of a stupid test, but...
@@ -66,7 +69,7 @@ class TestPhotoFunctions:
         count_tags = session.query(PhotoTag).filter(PhotoTag.p_id==P_UPLOADED).count()
         print "number of tags for photo %i: %i" % (P_UPLOADED, count_tags)
         assert(count_tags == 0) #nuh. fails.
-        
+    
     def test_update_photo_metadata(self):
         dt_uploaded = datetime.now()
         ext = "jpg"
@@ -85,7 +88,7 @@ class TestPhotoFunctions:
         assert (photo.date_uploaded == dt_uploaded)
         assert (photo.date_created is not None)
         assert (photo.ext == "jpg")
-        
+     
     def test_add_tags(self):
         # Singapore tag already exists on this photo. sky tag exists on other photo. cat tag is new.
         tags = get_photo_tags(P_UPLOADED)    

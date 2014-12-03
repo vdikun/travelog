@@ -12,7 +12,7 @@ class TravelogTest(TestCase):
     def create_app(self):
         app.config['TESTING'] = True
         self.db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-        init_db('./test_schema.sql')
+        init_db(app, './test_schema.sql')
         return app
 
     def tearDown(self):

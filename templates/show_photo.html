@@ -1,4 +1,6 @@
+{% from "macros.html" import show_photo %}
+
 {% extends "layout.html" %}
 {% block body %}
-  A photo.
+  {{ show_photo(photo, True) }}
 {% endblock %}

@@ -1,10 +1,10 @@
 """ minimal RESTful API for Photos """
-""" supports POST, GET <id>, DELETE <id> """
+""" supports POST /photos, GET /photos/<id>, DELETE /photos/<id> """
 
 from flask import request
 from flask.ext import restful
 
-from models import load_photo_json, new_photo_placeholder, upload_image, add_tags, delete_photo
+from models.photo import load_photo_json, new_photo_placeholder, upload_image, add_tags, delete_photo
 
 class Photo(restful.Resource):
         

@@ -1,0 +1,33 @@
+{% macro render_form(form, endpoint) %}
+<form method="POST" action="{{ endpoint }}">
+    {% for value in form %}
+    <div>{{ value.label }}: {{ value() }}</div>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+{% endmacro %}
+
+{% macro show_photo(photo, show_tags) %}
+  <div class=photo>
+  <h2>A photo</h2>
+  {% if show_tags %}
+    <div class=tags>
+    {% for tag in photo.tags %}
+      {{ tag|safe }}, 
+    {% else %}
+      No tags.
+    {% endfor %}
+    </div>
+  {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro show_photos(photos) %}
+  {% for photo in photos %}
+    <a href="{{ url_for('default.show_photo', photo_id = photo.id) }}">
+    {{ show_photo(photo, False) }}
+    </a>
+  {% else %}
+    No photos to see here.
+  {% endfor %}
+{% endmacro %}

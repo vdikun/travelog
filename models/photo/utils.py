@@ -10,6 +10,9 @@ class NoSuchObjectException(Exception):
 def get_photo_fname(photo_id, photo_ext):
     return config.IMG_DIR + str(photo_id) + "." + photo_ext
     
+def static_photo_fname(photo_id, photo_ext):
+    return '/img/' + str(photo_id) + "." + photo_ext
+    
 def get_photo(photo_id):
     assert_photo_exists(photo_id)
     return session.query(Photo).filter(Photo.id==photo_id).first()

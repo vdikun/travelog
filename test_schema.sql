@@ -1,6 +1,7 @@
 drop table if exists phototag;
 drop table if exists photos;
 drop table if exists tags;
+drop table if exists users;
 create table tags (
     id integer primary key autoincrement,
     text text unique not null
@@ -20,6 +21,11 @@ create table phototag (
     foreign key (p_id) references photos(id) ON DELETE CASCADE,
     foreign key (t_id) references tags(id) ON DELETE CASCADE,
     primary key (p_id, t_id)
+);
+create table users (
+    id integer primary key autoincrement,
+    name text unique not null,
+    password text not null
 );
 
 
@@ -45,3 +51,5 @@ INSERT INTO phototag VALUES (2, 1);
 INSERT INTO phototag VALUES (2, 7);
 INSERT INTO phototag VALUES (3, 7);
 INSERT INTO phototag VALUES (3, 6);
+
+INSERT INTO users (name, password) VALUES ('admin', 'password');

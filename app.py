@@ -2,13 +2,24 @@
 
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
+ 
+from flask.ext.login import LoginManager
      
-from views import photo_bp, default
+from views import default
+
+from models.user import get_user
 
 DEFAULT_BLUEPRINTS = (
     default,
-    photo_bp
 )
+
+def configure_login(app):
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    
+    @login_manager.user_loader
+    def load_user(userid):
+        return get_user(userid)
 
 def add_site_map(app):
     @app.route("/site-map")
@@ -46,6 +57,7 @@ def make_app():
     app.config.from_object('config')
     configure_blueprints(app, DEFAULT_BLUEPRINTS)
     configure_error_handlers(app)
+    configure_login(app)
     add_site_map(app)
     return app
     

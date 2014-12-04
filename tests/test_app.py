@@ -7,6 +7,8 @@ import tempfile
 from flask import request, url_for
 import unittest
 
+from models.photo import marshal, get_photo
+
 class TravelogTest(TestCase):
 
     def create_app(self):
@@ -19,11 +21,10 @@ class TravelogTest(TestCase):
         os.close(self.db_fd)
         os.unlink(self.app.config['DATABASE'])
         
-    def test_nothing(self):
+    def test_marshal(self):
         with self.app.test_request_context():
-            #print request.host
-            print url_for("static", filename='img/0.jpg')
-        pass
+            photo = get_photo(1)
+            marshal(photo)
 
 if __name__ == '__main__':
     unittest.main()

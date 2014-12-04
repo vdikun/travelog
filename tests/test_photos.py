@@ -6,8 +6,8 @@ from nose.tools import nottest
 from mock import Mock, patch
 
 # domain stuff
-from models.photos import *
-from models.tasks import update_photo_metadata
+from models.photo import *
+from models.photo.tasks import update_photo_metadata
 from app import make_app
 from db import Photo, Tag, PhotoTag
 import db

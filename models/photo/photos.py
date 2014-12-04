@@ -14,19 +14,19 @@ from tasks import add_tags, upload_image
 
 """ functions that operate on photo objects """
 
+# adds img_data, tags to Photo object
+def marshal(photo):
+    photo.img_uri = url_for('static', filename=static_photo_fname(photo.id, photo.ext))
+    tags = get_photo_tags(photo.id)
+    photo.tags = tags
+    return photo
+
 # returns Photo object with added attributes: img_data, tags    
 def load_photo(id):
     if not photo_exists(id): 
         return None
-    photo = session.query(Photo).filter(Photo.id==id).first()
-    photo_fname = get_photo_fname(id, photo.ext)
-    photo.img_uri = url_for('static/img', filename="something.jpg")
-    taglist = session.query(Tags).filter(PhotoTag.p_id==id)
-    tags = []
-    for tag in taglist:
-        tags.append(tag.text)
-    photo.tags = tags
-    return photo
+    photo = get_photo(id)
+    return marshal(photo)
 
 # serializes Photo object to JSON    
 def to_json(photo):
@@ -62,10 +62,15 @@ def delete_photo(id):
     # remove from file system
     os.remove(get_photo_fname(id, ext))
 
-# called by API Photo POST request    
+# called by API Photo POST request, returns new Photo's id
 def process_new_photo(image_data, ext, tags):
     photo_id = new_photo_placeholder().id
     upload_image.delay(photo_id, image_data, ext)
     add_tags.delay(photo_id, tags)
     return photo_id
 
+# returns list of marshalled Photo objects
+def load_all_photos():
+    photos = session.query(Photo).filter(Photo.date_uploaded != None).all()
+    photos.sort(key=lambda x: x.date_uploaded)
+    return [marshal(photo) for photo in photos]

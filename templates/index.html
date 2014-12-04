@@ -1,0 +1,11 @@
+{% from "macros.html" import show_photos, render_form %}
+
+{% extends "layout.html" %}
+{% block body %}
+  {% if current_user.is_authenticated() %}
+    {{ render_form(upload_form, "/upload") }}
+  {% else %}
+    {{ render_form(login_form, "/login") }}
+  {% endif %}
+  {{ show_photos(photos) }}
+{% endblock %}

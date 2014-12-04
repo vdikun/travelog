@@ -7,6 +7,8 @@ from contextlib import closing
 import sqlite3
 from travelog import config
 
+from flask.ext.login import UserMixin
+
 Base = declarative_base()
 engine = create_engine(config.DATABASEURI)
 metadata = MetaData(bind=engine)
@@ -22,6 +24,9 @@ class Tag(Base):
     
 class PhotoTag(Base):
     __table__ = Table('phototag', metadata, autoload=True)
+    
+class User(Base, UserMixin):
+    __table__ = Table('users', metadata, autoload=True)
     
 def connect_db(app):
     print "connect_db: %s" % app.config['DATABASE']

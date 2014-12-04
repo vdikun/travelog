@@ -1,1 +1,1 @@
-from forms import UploadPhotoForm
+from forms import UploadPhotoForm, LoginForm

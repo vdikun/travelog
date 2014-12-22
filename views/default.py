@@ -4,8 +4,8 @@ from flask import Blueprint, render_template, redirect, session, request, flash,
 from flask.ext.login import login_required, login_user, current_user, logout_user
 
 # domain specific
-from forms import UploadPhotoForm, LoginForm
-from models.photo import load_photo, load_all_photos
+from forms import UploadPhotoForm, LoginForm, SearchForm
+from models.photo import load_photo, load_all_photos, get_photos
 from models.user import authenticate_user
 from api import PhotoList
 
@@ -75,3 +75,12 @@ def logout():
     logout_user()
     return redirect(url_for('default.index'))
     
+@default.route('/search/', methods=['GET', 'POST'])
+def search():
+    photos = []
+    form = SearchForm(request.form)
+    print "hello from search"
+    if request.method == 'POST' and form.validate():
+        print "start search!"
+        photos = get_photos(form.tags.data, form.startdate.data, form.enddate.data)
+    return render_template('search.html', form=form, photos=photos)

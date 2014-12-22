@@ -12,14 +12,9 @@ from sqlalchemy.exc import IntegrityError
 
 # uploads Photo image to file system
 @celeryapp.task
-def upload_image(photo_id, img_data, photo_ext):
-    photo_fname = get_photo_fname(photo_id, photo_ext)
-    f = open(photo_fname, "w")
-    f.write(img_data)
-    f.close()
-    assert os.path.isfile(photo_fname)
-    date_uploaded = datetime.now()
-    update_photo_metadata.delay(photo_id, photo_ext, date_uploaded)
+def update_image(photo_id, tags, ext, date_uploaded):
+    add_tags.delay(photo_id, tags)
+    update_photo_metadata.delay(photo_id, ext, date_uploaded)
     
 # updates metadata of Photo object in db
 @celeryapp.task

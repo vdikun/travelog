@@ -1,6 +1,6 @@
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 #from wtforms.fields import FileField
-from wtforms import Form, StringField, PasswordField
+from wtforms import Form, StringField, PasswordField, DateField
 from wtforms.validators import ValidationError
 from config import ALLOWED_EXTENSIONS
 import os
@@ -40,7 +40,11 @@ class UploadPhotoForm(Form):
         else:
             raise ValidationError('field not Present')
         """
-    
+
+class SearchForm(Form):
+    tags = StringField('tags')
+    startdate = DateField('start')
+    enddate = DateField('end')
     
 class LoginForm(Form):
     name = StringField('username')

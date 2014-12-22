@@ -1,6 +1,7 @@
 import config
 from db import session, Photo, Tag, PhotoTag
 from sqlalchemy import and_, or_
+from flask.ext.restful.fields import DateTime
 
 """ utility functions """
 
@@ -21,6 +22,17 @@ def get_photo_tags(photo_id):
     query = session.query(Tag).filter(and_(PhotoTag.p_id==photo_id, PhotoTag.t_id==Tag.id))
     tags = [tag.text for tag in query]
     return tags
+
+# if dt > restful_dt, return 1
+# if dt < restful_dt, return -1
+# if they are equal, return 0
+def datecompare(dt, restful_dt):
+    dt = DateTime(dt)
+    if (dt > restful_dt):
+        return 1
+    if (dt < restful_dt):
+        return -1
+    return 0
     
 # asserts that the photo exists
 def assert_photo_exists(id):

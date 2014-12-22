@@ -3,12 +3,30 @@
 
 from flask import request
 from flask.ext import restful
+from flask.ext.restful import reqparse, fields
 from werkzeug.utils import secure_filename
 
-from models.photo import load_photo_json, process_new_photo, delete_photo
+from models.photo import load_photo_json, to_json, process_new_photo, delete_photo, get_photos
 
 import os
 import config
+
+from datetime import datetime
+
+def fileext(filename):
+    return filename.rsplit(".")[-1].upper()
+def allowed_file(filename):
+    ext = fileext(filename)
+    if ext in ["JPG"]:
+        return True
+    return False
+    
+def mydate(value):
+
+    if not value:
+        return None
+    dt = datetime.strptime(value, "%Y-%m-%d") # raises ValueError if fails
+    return dt
 
 class Photo(restful.Resource):
         
@@ -27,19 +45,22 @@ class Photo(restful.Resource):
             
 class PhotoList(restful.Resource):
 
+    def __init__(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('tags', type=str, help='Photo tags')
+        parser.add_argument('startdate', type=mydate, help="Start of date range")
+        parser.add_argument('enddate', type=mydate, help="End of date range")
+        parser.add_argument('lat', type=float, help="Latitude of center")
+        parser.add_argument('lon', type=float, help="Longitude of center")
+        parser.add_argument('rad', type=float, help='Radius from center in some arbitrary units', default=5)
+        self.get_parser = parser
+
     def get(self):
-        return {"hello": "world"}
+        args = self.get_parser.parse_args()
+        photos = get_photos(args.tags, args.startdate, args.enddate, args.lat, args.lon, args.rad)
+        return [to_json(photo) for photo in photos]
     
     def post(self):
-    
-        def fileext(filename):
-            return filename.rsplit(".")[-1].upper()
-    
-        def allowed_file(filename):
-            ext = fileext(filename)
-            if ext in ["JPG"]:
-                return True
-            return False
             
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
         file = request.files['photo']

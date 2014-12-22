@@ -9,6 +9,8 @@ from views import default
 
 from models.user import get_user
 
+from api import init_api
+
 DEFAULT_BLUEPRINTS = (
     default,
 )
@@ -59,6 +61,7 @@ def make_app():
     configure_error_handlers(app)
     configure_login(app)
     add_site_map(app)
+    init_api(app)
     return app
     
 app = make_app()

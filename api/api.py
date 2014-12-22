@@ -3,8 +3,12 @@
 
 from flask import request
 from flask.ext import restful
+from werkzeug.utils import secure_filename
 
-from models.photo import load_photo_json, new_photo_placeholder, upload_image, add_tags, delete_photo
+from models.photo import load_photo_json, process_new_photo, delete_photo
+
+import os
+import config
 
 class Photo(restful.Resource):
         
@@ -23,12 +27,36 @@ class Photo(restful.Resource):
             
 class PhotoList(restful.Resource):
 
+    def get(self):
+        return {"hello": "world"}
+    
     def post(self):
-        image_data = request.form['image_data']
-        tags = request.form['tags']
-        ext = request.form['ext']
-        photo_id = process_new_photo(image_data, ext, tags) 
-        return {"photo_id": photo_id, "status": "uploading"}
+    
+        def fileext(filename):
+            return filename.rsplit(".")[-1].upper()
+    
+        def allowed_file(filename):
+            ext = fileext(filename)
+            if ext in ["JPG"]:
+                return True
+            return False
+            
+        tags = [tag.strip() for tag in request.form['tags'].split(',')]
+        file = request.files['photo']
+        redirect = ("redirectme" in request.form)
+        
+        if not file:
+            return 404, "No file"
+        if not allowed_file(file.filename):
+            return 404, "Bad file extension"
+            
+        # Make the filename safe, remove unsupported chars
+        filename = secure_filename(file.filename)
+        # insert temporary record in database
+        new_filename = process_new_photo(fileext(file.filename), tags)
+        # Move the file from the temporary folder to the upload folder we setup
+        file.save(os.path.join(config.UPLOAD_FOLDER, new_filename))
+        return {"success": True, "file": new_filename}
 
 def init_api(app):
     api = restful.Api(app)        

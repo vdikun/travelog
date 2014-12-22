@@ -3,9 +3,9 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if current_user.is_authenticated() %}
-    {{ render_form(upload_form, "/upload") }}
+    {{ render_form(upload_form, "/upload/", enctype="multipart/form-data") }}
   {% else %}
-    {{ render_form(login_form, "/login") }}
+    {{ render_form(login_form, "/login/") }}
   {% endif %}
   {{ show_photos(photos) }}
 {% endblock %}

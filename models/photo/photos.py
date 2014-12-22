@@ -62,12 +62,11 @@ def delete_photo(id):
     # remove from file system
     os.remove(get_photo_fname(id, ext))
 
-# called by API Photo POST request, returns new Photo's id
-def process_new_photo(image_data, ext, tags):
+# called by API Photo POST request, returns new Photo's filename
+def process_new_photo(ext, tags):
     photo_id = new_photo_placeholder().id
-    upload_image.delay(photo_id, image_data, ext)
     add_tags.delay(photo_id, tags)
-    return photo_id
+    return str(photo_id) + "." + ext
 
 # returns list of marshalled Photo objects
 def load_all_photos():

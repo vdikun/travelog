@@ -9,7 +9,20 @@ from models.photo import load_photo, load_all_photos
 from models.user import authenticate_user
 from api import PhotoList
 
+import config
+
 default = Blueprint('default', __name__, url_prefix='')
+
+""" util functions """
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            print "Error"
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))
 
 """ home page """
 """ GET: see all photos 
@@ -43,7 +56,7 @@ def search_photo():
 """ POST: if successful, user is now logged in 
     redirect to home page
 """
-@default.route('/login', methods=['POST'])
+@default.route('/login/', methods=['POST'])
 def login():
     form = LoginForm(request.form)
     user = authenticate_user(form.name.data, form.password.data)
@@ -57,7 +70,7 @@ def login():
 """ POST: if successful, user is now logged out
     redirect to home page
 """
-@default.route('/logout', methods=['GET'])
+@default.route('/logout/', methods=['GET'])
 def logout():
     logout_user()
     return redirect(url_for('default.index'))
@@ -66,10 +79,11 @@ def logout():
 """ POST: if successful, new photo is created
     redirect to new photo page
 """
-@default.route('/upload', methods=['POST'])
-#@login_required
+@default.route('/upload/', methods=['POST'])
+@login_required
 def upload_photo_view():
-    form = UploadPhotoForm(request.form)
+    form = UploadPhotoForm()
+    """
     if form.validate():
         # call API: POST to PhotoList
         # get photo ID from return
@@ -78,4 +92,18 @@ def upload_photo_view():
         photo = load_photo(ret['photo_id'])
         return url_for('default.show_photo', photo=photo)
     flash('invalid form.')
+    return redirect(url_for('default.index'))
+    """
+    print "we have a file maybe: ", request.files['photo']
+    if form.validate():
+        print "OK"
+        ret = PhotoList().post()
+        photo_id = ret['photo_id']
+        photo_ext = ret['photo_ext']
+        filename = secure_filename(str(photo_id) + "." + photo_ext)
+        form.photo.data.save(config.UPLOAD_FOLDER + filename)
+        flash("Photo uploaded")
+        return redirect(url_for('default.show_photo', photo_id = photo_id))
+    #flash("Photo could not be uploaded")
+    flash_errors(form)
     return redirect(url_for('default.index'))

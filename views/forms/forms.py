@@ -1,6 +1,6 @@
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 #from wtforms.fields import FileField
-from wtforms import Form, StringField, PasswordField, DateField
+from wtforms import Form, StringField, PasswordField, DateField, FloatField
 from wtforms.validators import ValidationError
 from config import ALLOWED_EXTENSIONS
 import os
@@ -45,6 +45,9 @@ class SearchForm(Form):
     tags = StringField('tags')
     startdate = DateField('start')
     enddate = DateField('end')
+    lat = FloatField('latitude')
+    lon = FloatField('longitude')
+    radius = FloatField('radius')
     
 class LoginForm(Form):
     name = StringField('username')

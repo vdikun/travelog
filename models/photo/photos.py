@@ -87,7 +87,7 @@ def load_all_photos():
     photos.sort(key=lambda x: x.date_uploaded)
     return [marshal(photo) for photo in photos]
     
-def get_photos(tags, start, end, d, e, f):
+def get_photos(tags, start, end, lat, lon, rad):
     photos = load_all_photos()
     print start, " ", end
     # filter for matching tags: AND
@@ -103,4 +103,7 @@ def get_photos(tags, start, end, d, e, f):
     if end:
         print "end: ", end
         photos = filter(lambda x: x.date_created <= end, photos)
+    # filter by geolocation
+    if lat and lon and rad:
+        photos = filter(lambda x: in_radius(x, lat, lon, rad), photos)
     return photos

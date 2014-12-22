@@ -22,7 +22,6 @@ def allowed_file(filename):
     return False
     
 def mydate(value):
-
     if not value:
         return None
     dt = datetime.strptime(value, "%Y-%m-%d") # raises ValueError if fails
@@ -60,8 +59,7 @@ class PhotoList(restful.Resource):
         photos = get_photos(args.tags, args.startdate, args.enddate, args.lat, args.lon, args.rad)
         return [to_json(photo) for photo in photos]
     
-    def post(self):
-            
+    def post(self):           
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
         file = request.files['photo']
         redirect = ("redirectme" in request.form)

@@ -75,35 +75,3 @@ def logout():
     logout_user()
     return redirect(url_for('default.index'))
     
-""" upload """
-""" POST: if successful, new photo is created
-    redirect to new photo page
-"""
-@default.route('/upload/', methods=['POST'])
-@login_required
-def upload_photo_view():
-    form = UploadPhotoForm()
-    """
-    if form.validate():
-        # call API: POST to PhotoList
-        # get photo ID from return
-        ret = PhotoList.post()
-        flash('uploaded photo.')
-        photo = load_photo(ret['photo_id'])
-        return url_for('default.show_photo', photo=photo)
-    flash('invalid form.')
-    return redirect(url_for('default.index'))
-    """
-    print "we have a file maybe: ", request.files['photo']
-    if form.validate():
-        print "OK"
-        ret = PhotoList().post()
-        photo_id = ret['photo_id']
-        photo_ext = ret['photo_ext']
-        filename = secure_filename(str(photo_id) + "." + photo_ext)
-        form.photo.data.save(config.UPLOAD_FOLDER + filename)
-        flash("Photo uploaded")
-        return redirect(url_for('default.show_photo', photo_id = photo_id))
-    #flash("Photo could not be uploaded")
-    flash_errors(form)
-    return redirect(url_for('default.index'))

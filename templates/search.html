@@ -1,8 +1,0 @@
-{% from "macros.html" import show_photos, render_form %}
-
-{% extends "layout.html" %}
-{% block body %}
-  <h2>Search</h2>
-  {{ render_form(form, url_for('default.search')) }}
-  {{ show_photos(photos) }}
-{% endblock %}

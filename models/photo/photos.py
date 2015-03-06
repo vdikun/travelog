@@ -89,10 +89,10 @@ def load_all_photos():
     
 def get_photos(tags, start, end, lat, lon, rad):
     photos = load_all_photos()
-    print start, " ", end
     # filter for matching tags: AND
     if tags:
         tags = [tag.strip() for tag in tags.split(',')]
+        print "tags: ", tags
         for tag in tags:
             photos = filter(lambda x: tag in x.tags, photos)
     # filter by start date

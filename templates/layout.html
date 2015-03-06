@@ -1,15 +1,41 @@
 <!doctype html>
-<title>Travelog</title>
-<!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">-->
-<div class=page>
-  <h1>Travelog</h1>
-  <div class=metanav>
-  {% if current_user.is_authenticated() %}
-    Logged in as {{ current_user.name }}. <a href="{{ url_for('default.logout') }}">log out?</a>
-  {% endif %}
-  </div>
-  {% for message in get_flashed_messages() %}
-    <div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<head>
+    <title>Travelog</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+    <script type=text/javascript src="{{ url_for('static', filename='script.js') }}" ></script>
+</head>
+
+<table class=wrapper><tr><td>
+<table class=page>
+  <tr>
+    <td>
+      <table class=header>
+        <tr>
+          <td class=title><h1>Travelog</h1></td>
+          <td class=metanav>
+          {% if current_user.is_authenticated() %}
+            Logged in as {{ current_user.name }}. <a href="{{ url_for('default.logout') }}">log out?</a>
+          {% endif %}
+          </td>
+        </tr>
+      </table>
+      <table class=flash><tr><td>
+        {% for message in get_flashed_messages() %}
+          <div class=flash>{{ message }}</div>
+        {% endfor %}
+      </td></tr></table>
+    </td>
+  </tr>
+  <tr>
+    <td class=body>
+      {% block body %}{% endblock %}
+    </td>
+  </tr>
+</table>
+</td></tr>
+<tr><td>
+<table class=footer>
+  <tr><td><a href="{{ url_for('static', filename='contact.html') }}">Contact Me</a></td></tr>
+</table>
+</td></tr></table>

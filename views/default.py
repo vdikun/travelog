@@ -31,10 +31,17 @@ def flash_errors(form):
 """
 @default.route('/')
 def index():
-    photos = load_all_photos()
     upload_form = UploadPhotoForm()
     login_form = LoginForm()
-    return render_template('index.html', photos=photos, upload_form=upload_form, login_form=login_form)
+    search_form = SearchForm(request.form)
+    """
+    print "hello from search"
+    if request.method == 'POST' and form.validate():
+        print "start search!"
+        photos = get_photos(form.tags.data, form.startdate.data, form.enddate.data)
+    return render_template('search.html', form=form, photos=photos)
+    """
+    return render_template('index.html', upload_form=upload_form, login_form=login_form, search_form=search_form)
 
 """ photo """
 """ GET: see photo w/ tags, metadata 
@@ -43,15 +50,7 @@ def index():
 def show_photo(photo_id):
     photo = load_photo(photo_id)
     return render_template('show_photo.html', photo=photo)
-
-""" search """
-""" GET: see search form
-    POST: see search form and search results
-"""
-@default.route('/search', methods=['GET', 'POST'])
-def search_photo():
-    return 404
-
+    
 """ login """
 """ POST: if successful, user is now logged in 
     redirect to home page
@@ -74,13 +73,10 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('default.index'))
-    
-@default.route('/search/', methods=['GET', 'POST'])
-def search():
-    photos = []
-    form = SearchForm(request.form)
-    print "hello from search"
-    if request.method == 'POST' and form.validate():
-        print "start search!"
-        photos = get_photos(form.tags.data, form.startdate.data, form.enddate.data)
-    return render_template('search.html', form=form, photos=photos)
+
+""" upload """
+""" uses internal API """
+@default.route('/upload/', methods=['POST'])
+@login_required
+def upload():
+    return None

@@ -1,0 +1,8 @@
+{% from "macros.html" import show_viewers, render_form %}
+
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Viewers</h2>
+  {{ render_form(form, url_for('default.makeviewers')) }}
+  {{ show_viewers(viewers) }}
+{% endblock %}

@@ -4,9 +4,9 @@ from flask import Blueprint, render_template, redirect, session, request, flash,
 from flask.ext.login import login_required, login_user, current_user, logout_user
 
 # domain specific
-from forms import UploadPhotoForm, LoginForm, SearchForm
+from forms import UploadPhotoForm, LoginForm, SearchForm, MakeViewersForm
 from models.photo import load_photo, load_all_photos, get_photos
-from models.user import authenticate_user
+from models.user import authenticate_user, make_viewers, find_viewers
 from api import PhotoList
 
 import config
@@ -74,7 +74,10 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('default.index'))
-    
+
+""" search """
+""" POST: gets filtered photos from db
+"""    
 @default.route('/search/', methods=['GET', 'POST'])
 def search():
     photos = []
@@ -84,3 +87,16 @@ def search():
         print "start search!"
         photos = get_photos(form.tags.data, form.startdate.data, form.enddate.data)
     return render_template('search.html', form=form, photos=photos)
+
+""" makeviewers """
+""" POST: makes viewers in db
+"""    
+@default.route('/viewers/', methods=['GET', 'POST'])
+def makeviewers():
+    form = MakeViewersForm(request.form)
+    if request.method == 'POST' and form.validate():
+        print "make viewers!"
+        make_viewers(current_user, form.emails.data, form.password.data)
+        form = MakeViewersForm()
+    viewers = find_viewers(current_user)
+    return render_template('viewers.html', form=form, viewers=viewers)

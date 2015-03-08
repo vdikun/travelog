@@ -36,3 +36,12 @@
     No photos to see here.
   {% endfor %}
 {% endmacro %}
+
+{% macro show_viewers(viewers) %}
+  {% for viewer in viewers %}
+      {{ viewer.name }} | {{ viewer.password }}
+      <br>
+  {% else %}
+    Your account has no viewers.
+  {% endfor %}
+{% endmacro %}

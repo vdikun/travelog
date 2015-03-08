@@ -27,7 +27,7 @@ create table users (
     id integer primary key autoincrement,
     name text unique not null,
     password text not null,
-    owner boolean not null default TRUE
+    owner boolean not null default 1
 );
 /* 
  * owner can have many viewers.

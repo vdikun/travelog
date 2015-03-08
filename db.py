@@ -28,7 +28,7 @@ class PhotoTag(Base):
 class User(Base, UserMixin):
     __table__ = Table('users', metadata, autoload=True)
     
-class Viewer(Base, UserMixin):
+class Viewer(Base):
     __table__ = Table('viewers', metadata, autoload=True)
     
 def connect_db(app):

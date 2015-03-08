@@ -12,7 +12,7 @@ def find_user(name, password):
 required by Flask-Login
 '''
 def authenticate_user(name, password):
-    find_user(name, password)
+    return find_user(name, password)
 
 '''
 returns User object matching uid

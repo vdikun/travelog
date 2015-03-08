@@ -2,6 +2,7 @@ drop table if exists phototag;
 drop table if exists photos;
 drop table if exists tags;
 drop table if exists users;
+drop table if exists viewers;
 create table tags (
     id integer primary key autoincrement,
     text text unique not null
@@ -25,9 +26,20 @@ create table phototag (
 create table users (
     id integer primary key autoincrement,
     name text unique not null,
-    password text not null
+    password text not null,
+    owner boolean not null default TRUE
 );
-
+/* 
+ * owner can have many viewers.
+ * viewer has 1 owner.  
+ */
+create table viewers (
+    id integer primary key autoincrement,
+    v_id integer not null unique,
+    o_id integer, 
+    foreign key (o_id) references users(id) ON DELETE CASCADE,
+    foreign key (v_id) references users(id) ON DELETE CASCADE
+);
 
 INSERT INTO tags (text) VALUES ('Singapore');
 INSERT INTO tags (text) VALUES ('Vancouver');

@@ -10,11 +10,3 @@ UPLOAD_FOLDER = "./static/img/"
 IMG_DIR = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = ['jpg']
-
-# email server
-MAIL_SERVER = 'smtp.googlemail.com'
-MAIL_PORT = 465
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
-MAIL_USERNAME = "fogkitty@gmail.com"
-MAIL_PASSWORD = "@themanor"

@@ -1,8 +1,10 @@
-{% from "macros.html" import show_viewers, render_form %}
+{% from "macros.html" import show_viewers, iterform %}
 
 {% extends "layout.html" %}
 {% block body %}
   <h2>Viewers</h2>
-  {{ render_form(form, url_for('default.makeviewers')) }}
+  <form method="POST" action="{{ url_for('default.makeviewers') }}" id="makeviewersform">
+  {{ iterform(form) }}
+  </form>
   {{ show_viewers(viewers) }}
 {% endblock %}

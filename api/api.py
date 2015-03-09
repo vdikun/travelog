@@ -26,6 +26,11 @@ def mydate(value):
         return None
     dt = datetime.strptime(value, "%Y-%m-%d") # raises ValueError if fails
     return dt
+    
+def myfloat(value):
+    if not value:
+        return value
+    return float(value)
 
 class Photo(restful.Resource):
         
@@ -49,14 +54,15 @@ class PhotoList(restful.Resource):
         parser.add_argument('tags', type=str, help='Photo tags')
         parser.add_argument('startdate', type=mydate, help="Start of date range")
         parser.add_argument('enddate', type=mydate, help="End of date range")
-        parser.add_argument('lat', type=float, help="Latitude of center")
-        parser.add_argument('lon', type=float, help="Longitude of center")
-        parser.add_argument('rad', type=float, help='Radius from center in some arbitrary units', default=5)
+        parser.add_argument('lat', type=myfloat, help="Latitude of center")
+        parser.add_argument('lon', type=myfloat, help="Longitude of center")
+        parser.add_argument('rad', type=myfloat, help='Radius from center in some arbitrary units', default=5)
         self.get_parser = parser
 
     def get(self):
         args = self.get_parser.parse_args()
         photos = get_photos(args.tags, args.startdate, args.enddate, args.lat, args.lon, args.rad)
+        print "getting %s photos" % len(photos)
         return [to_json(photo) for photo in photos]
     
     def post(self):           

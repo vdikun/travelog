@@ -1,4 +1,4 @@
-DATABASE = '/tmp/travelog.db'
+DATABASE = '/var/lib/sqlite3/travelog.db'
 DATABASEURI = 'sqlite:///' + DATABASE
 DEBUG = True
 TESTING = True

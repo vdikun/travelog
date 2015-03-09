@@ -1,20 +1,17 @@
-{% macro render_form(form, endpoint, enctype=None) %}
-{% if enctype %}
-  <form method="POST" action="{{ endpoint }}" enctype="{{ enctype }}">
-{% else %}
-  <form method="POST" action="{{ endpoint }}">
-{% endif %}
+{% macro iterform(form) %}
   {% for value in form %}
-    <div>{{ value.label }}: {{ value() }}</div>
+    <div class=formspan>
+    <span class="field">{{ value.label }}:</span> <span class="input">{{ value() }}</span>
+    </div>
   {% endfor %}
   {{ form.csrf_token }}
   <input type="submit" value="Submit">
-  </form>
 {% endmacro %}
 
 {% macro show_photo(photo, show_tags) %}
   <div class=photo>
   <h2>A photo</h2>
+  <img src="{{ photo.img_uri }}" class=photo_img>
   {% if show_tags %}
     <div class=tags>
     {% for tag in photo.tags %}

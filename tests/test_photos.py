@@ -23,7 +23,7 @@ TEST_IMG_DIR = "./static/test/"
 
 P_NONE = 15
 P_UPLOADED = 1
-P_NOT_UPLOADED = 2
+P_NOT_UPLOADED = 3
 
 class TestPhotoFunctions:
 
@@ -76,7 +76,6 @@ class TestPhotoFunctions:
         photo_id = P_NOT_UPLOADED
         # look at Photo in db
         photo = get_photo(photo_id)
-        assert (photo.uploaded == 0)
         assert (photo.date_uploaded is None)
         assert (photo.date_created is None)
         assert (photo.ext is None)
@@ -84,7 +83,6 @@ class TestPhotoFunctions:
         update_photo_metadata(photo_id, ext, dt_uploaded)
         # assert that metadata is updated
         photo = get_photo(photo_id)
-        assert (photo.uploaded == 1)
         assert (photo.date_uploaded == dt_uploaded)
         assert (photo.date_created is not None)
         assert (photo.ext == "jpg")

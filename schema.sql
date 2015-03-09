@@ -13,8 +13,7 @@ create table photos (
     date_created datetime default null,
     date_uploaded datetime default null,
     lat float default null,
-    lon float default null,
-    uploaded integer not null default 0
+    lon float default null
 );
 create table phototag (
     p_id integer,

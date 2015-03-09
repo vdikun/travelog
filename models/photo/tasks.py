@@ -22,9 +22,14 @@ def update_photo_metadata(photo_id, photo_ext, date_uploaded):
     photo_fname = get_photo_fname(photo_id, photo_ext)
     # read metadata: geolocation, date created
     gtr = GeoTagReader(photo_fname)
-    lat = gtr.get_lat()                   # float
-    lon = gtr.get_lon()                   # float
-    date_created = gtr.get_date_created() # datetime object
+    try:
+        lat = gtr.get_lat()                   # float
+        lon = gtr.get_lon()                   # float
+        date_created = gtr.get_date_created() # datetime object 
+    except KeyError:
+        lat = None
+        lon = None
+        date_created = date_uploaded
     # set values on Photo object
     photo = get_photo(photo_id)
     photo.ext = photo_ext
@@ -32,7 +37,6 @@ def update_photo_metadata(photo_id, photo_ext, date_uploaded):
     photo.lon = lon
     photo.date_created = date_created
     photo.date_uploaded = date_uploaded
-    photo.uploaded = 1
     assert photo in session
     session.commit()
 

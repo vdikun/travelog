@@ -48,7 +48,7 @@ def make_user(name, password):
 '''
 creates new Viewer tuple and inserts into DB
 '''        
-def make_viewer(owner, email, password):
+def _make_viewer(owner, email, password):
     viewer = User(name=email, password=password, owner=False)
     session.add(viewer)
     session.commit()
@@ -61,4 +61,4 @@ def make_viewer(owner, email, password):
 creates list of new Viewer tuples and inserts into DB
 '''  
 def make_viewers(owner, emails, password):
-    [make_viewer(owner, email, password) for email in emails]  
+    [_make_viewer(owner, email, password) for email in emails]

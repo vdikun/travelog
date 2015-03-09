@@ -8,6 +8,7 @@ from forms import UploadPhotoForm, LoginForm, SearchForm, MakeViewersForm
 from models.photo import load_photo, load_all_photos, get_photos
 from models.user import authenticate_user, make_viewers, find_viewers
 from api import PhotoList
+from serveremail import email_new_viewers
 
 import config
 
@@ -95,8 +96,8 @@ def search():
 def makeviewers():
     form = MakeViewersForm(request.form)
     if request.method == 'POST' and form.validate():
-        print "make viewers!"
         make_viewers(current_user, form.emails.data, form.password.data)
+        email_new_viewers(current_user, form.emails.data, form.password.data)
         form = MakeViewersForm()
     viewers = find_viewers(current_user)
     return render_template('viewers.html', form=form, viewers=viewers)

@@ -41,9 +41,9 @@ class TestUserFunctions:
         viewers = user.find_viewers(u)
         assert len(viewers) == 0
         
-        user.make_viewer(u, email, v_pwd)
+        user.make_viewers(u, [email], v_pwd)
         viewers = user.find_viewers(u)
-        assert len(viewers) == 1   # fail??
+        assert len(viewers) == 1
         
         user.make_viewers(u, emails, v_pwd)
         viewers = user.find_viewers(u)

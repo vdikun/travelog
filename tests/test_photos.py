@@ -7,7 +7,7 @@ from mock import Mock, patch
 
 # domain stuff
 from models.photo import *
-from models.photo.tasks import update_photo_metadata
+from models.photo.tasks import update_photo_metadata, add_tags
 from app import make_app
 from db import Photo, Tag, PhotoTag
 import db

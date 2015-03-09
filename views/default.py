@@ -92,6 +92,7 @@ def search():
 """ POST: makes viewers in db
 """    
 @default.route('/viewers/', methods=['GET', 'POST'])
+@login_required
 def makeviewers():
     form = MakeViewersForm(request.form)
     if request.method == 'POST' and form.validate():

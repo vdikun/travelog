@@ -1,6 +1,10 @@
 {% from "macros.html" import show_photos, iterform %}
 
 {% extends "layout.html" %}
+<script type="text/javascript" src="{{ url_for('static', filename='new.js') }}"></script>
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
 {% block body %}
       <table>
         <tr>
@@ -8,7 +12,7 @@
               {% if current_user.is_authenticated() %}
                 <div class=upload>
                   <h2>Upload</h2>
-                  <form method="POST" action="/photos/" enctype="multipart/form-data" id="uploadform">
+                  <form type="loginform" method="POST"  action="/photos/" enctype="multipart/form-data" id="uploadform">
                   {{ iterform(upload_form) }}
                   </form>
                 </div>
@@ -34,3 +38,4 @@
 
 
 {% endblock %}
+

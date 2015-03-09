@@ -62,7 +62,8 @@ def new_photo_placeholder():
 def process_new_photo(ext, tags):
     photo_id = new_photo_placeholder().id
     date_uploaded = datetime.now()
-    update_image.delay(photo_id, tags, ext, date_uploaded)
+    #update_image.delay(photo_id, tags, ext, date_uploaded)
+    update_image(photo_id, tags, ext, date_uploaded)
     return str(photo_id) + "." + ext
     
 """ delete functions """

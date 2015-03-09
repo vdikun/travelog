@@ -1,3 +1,6 @@
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='button.css') }}">
+
 {% macro iterform(form) %}
   {% for value in form %}
     <div class=formspan>
@@ -5,7 +8,7 @@
     </div>
   {% endfor %}
   {{ form.csrf_token }}
-  <input type="submit" value="Submit">
+  <input  type="submit" value="Submit">
 {% endmacro %}
 
 {% macro show_photo(photo, show_tags) %}
@@ -42,3 +45,4 @@
     Your account has no viewers.
   {% endfor %}
 {% endmacro %}
+

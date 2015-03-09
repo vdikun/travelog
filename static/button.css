@@ -1,0 +1,20 @@
+div#login {
+    position: relative;
+    float: right;
+    height: 20px;
+    padding: 5px;
+}
+div#login:focus div {
+    background: rgba(0,0,0,.2);
+}
+div#login div {
+    position: absolute;
+    top:30px;
+    right:0;
+    width: 200px;
+    height: 100px;
+    padding: 10px;
+    background: rgba(0,0,0,.2);
+    visibility: hidden;
+}
+

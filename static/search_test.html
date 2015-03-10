@@ -1,0 +1,70 @@
+<!doctype html>
+<head>
+<title>Travelog</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+<script>
+
+$(function() {
+    jQuery('#photoform').submit( function() {
+        
+        $.ajax({
+            url     : $(this).attr('action'),
+            type    : $(this).attr('method'),
+            data    : $(this).serialize(),
+            success : function( response ) {
+                        $('#result').empty();
+                        if (response.length === 0) {
+                            $('#result').text("No photos found.");
+                        } else {
+                            $('#result').append(response.length + "photos found.");
+                            $(response).each(function( index ) {
+                                var obj = response[index];
+                                $('#result').append("<div class=photo><a href=" + obj.img_uri + ">Photo</a></div>");
+                            });
+                        }
+                      }
+        });
+
+        return false;
+    });
+});
+
+</script>
+</head>
+<!--<link rel=stylesheet type=text/css href="/static/style.css">-->
+<div class=page>
+  <h1>Travelog</h1>
+  <div class=metanav>
+  
+  </div>
+  
+  
+  <h2>Search</h2>
+  
+
+  <form method="GET" action="http://127.0.0.1:5000/photos/" id="photoform">
+
+  
+    <div><label for="tags">tags</label>: <input id="tags" name="tags" type="text" value=""></div>
+  
+    <div><label for="startdate">start</label>: <input id="startdate" name="startdate" type="text" value=""></div>
+  
+    <div><label for="enddate">end</label>: <input id="enddate" name="enddate" type="text" value=""></div>
+    
+    <div><label for="lat">latitude</label>: <input id="lat" name="lat" type="text" value=""></div>
+  
+    <div><label for="lon">longitude</label>: <input id="lon" name="lon" type="text" value=""></div>
+  
+    <div><label for="radius">radius</label>: <input id="radius" name="radius" type="text" value=""></div>
+  
+  
+  <input type="submit" value="Submit">
+  </form>
+
+  
+  <div id=result>
+    No photos to see here.
+  </div>
+
+
+</div>

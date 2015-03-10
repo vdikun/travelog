@@ -42,7 +42,6 @@ def logout():
 """
 @default.route('/')
 def index():
-    '''
     if not current_user.is_authenticated():
         # TODO display new account form
         form = LoginForm()
@@ -51,15 +50,6 @@ def index():
         return redirect(url_for('owner.index'))
     else:
         return redirect(url_for('viewer.index'))
-    '''
-    form = LoginForm()
-    return render_template('login.html', login_form=form)
-    '''
-    form = LoginForm()
-    if not current_user.is_authenticated():
-        print "helohlo"
-    return render_template('hello.html', login_form=form)
-    '''
 
 
 """ search """

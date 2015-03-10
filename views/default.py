@@ -62,11 +62,6 @@ def index():
     '''
 
 
-@default.route('/hello/')
-def hello():
-    return render_template('hello.html')
-
-
 """ search """
 """ POST: gets filtered photos from db
 """    

@@ -13,7 +13,9 @@ create table photos (
     date_created datetime default null,
     date_uploaded datetime default null,
     lat float default null,
-    lon float default null
+    lon float default null,
+    o_id integer,
+    foreign key (o_id) references users(id) ON DELETE CASCADE
 );
 create table phototag (
     p_id integer,

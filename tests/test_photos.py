@@ -7,7 +7,6 @@ from mock import Mock, patch
 
 # domain stuff
 from models.photo import *
-from models.photo.tasks import update_photo_metadata, add_tags
 from app import make_app
 from db import Photo, Tag, PhotoTag
 import db
@@ -44,7 +43,9 @@ class TestPhotoFunctions:
         shutil.rmtree(TEST_IMG_DIR)
     
     def test_new_photo_placeholder(self):
-        photo = new_photo_placeholder()
+        user = Mock()
+        user.id = 1
+        photo = new_photo_placeholder(user)
         assert(photo.id == 4) # kind of a stupid test, but...
     
     @nottest    
@@ -102,7 +103,7 @@ class TestPhotoFunctions:
     @nottest    
     def test_upload_image(self):
         ext = 'jpg'
-        with patch('update_photo_metadata.delay') as mock_task:
+        with patch('update_photo_metadata') as mock_task:
             fname = get_photo_fname(P_NONE, ext)
             assert not isfile(fname)
             upload_image(P_NONE, 'xxy', ext)

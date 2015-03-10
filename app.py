@@ -5,7 +5,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
  
 from flask.ext.login import LoginManager
      
-from views import default
+from views import default, owner, viewer
 
 from models.user import get_user
 
@@ -17,6 +17,8 @@ from serveremail import mail
 
 DEFAULT_BLUEPRINTS = (
     default,
+    owner,
+    viewer
 )
 
 def configure_login(app):

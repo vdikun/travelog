@@ -1,22 +1,15 @@
-{% from "macros.html" import show_photos, iterform %}
+{% from "macros.html" import iterform %}
 
 {% extends "layout.html" %}
 {% block body %}
       <table>
         <tr>
           <td class=options>
-              {% if current_user.is_authenticated() %}
+              {% if upload_form %}
                 <div class=upload>
                   <h2>Upload</h2>
                   <form method="POST" action="/photos/" enctype="multipart/form-data" id="uploadform">
                   {{ iterform(upload_form) }}
-                  </form>
-                </div>
-              {% else %}
-                <div class=login>
-                  <h2>Login</h2>
-                  <form method="POST" action="/login/" id="loginform">
-                  {{ iterform(login_form) }}
                   </form>
                 </div>
               {% endif %}

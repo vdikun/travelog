@@ -1,0 +1,6 @@
+{% from "macros.html" import render_form %}
+
+{% extends "layout.html" %}
+{% block body %}
+  {{ render_form(form, "/register/") }}
+{% endblock %}

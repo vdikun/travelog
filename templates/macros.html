@@ -1,15 +1,24 @@
 {% macro render_form(form, endpoint, enctype=None) %}
-{% if enctype %}
-  <form method="POST" action="{{ endpoint }}" enctype="{{ enctype }}">
-{% else %}
-  <form method="POST" action="{{ endpoint }}">
-{% endif %}
-  {% for value in form %}
-    <div>{{ value.label }}: {{ value() }}</div>
-  {% endfor %}
-  {{ form.csrf_token }}
-  <input type="submit" value="Submit">
-  </form>
+    {% if form.errors %}
+        <ul class="errors">
+        {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+            {% for error in field_errors %}
+                <li>{{ form[field_name].label }}: {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if enctype %}
+      <form method="POST" action="{{ endpoint }}" enctype="{{ enctype }}">
+    {% else %}
+      <form method="POST" action="{{ endpoint }}">
+    {% endif %}
+      {% for value in form %}
+        <div>{{ value.label }}: {{ value() }}</div>
+      {% endfor %}
+      {{ form.csrf_token }}
+      <input type="submit" value="Submit">
+      </form>
 {% endmacro %}
 
 {% macro show_photo(photo, show_tags) %}

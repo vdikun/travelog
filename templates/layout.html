@@ -19,7 +19,9 @@
           <td class=title><h1>Travelog</h1></td>
           <td class=metanav>
           {% if current_user.is_authenticated() %}
-            Logged in as {{ current_user.name }}. <a href="{{ url_for('default.logout') }}">log out?</a>
+            Logged in as {{ current_user.name }}, 
+            {% if current_user.is_owner() %}owner{% else %}viewer.{% endif %} 
+            <a href="{{ url_for('default.logout') }}">log out?</a>
           {% endif %}
           </td>
         </tr>
@@ -43,4 +45,4 @@
   <tr><td><a href="{{ url_for('static', filename='contact.html') }}">Contact Me</a></td></tr>
 </table>
 </td></tr></table>
-
+</td></tr></table>

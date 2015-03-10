@@ -8,7 +8,6 @@ from mock import Mock, patch
 # domain stuff
 from models import user
 from app import make_app
-from db import User, Viewer
 import db
 import shutil, os
 import config

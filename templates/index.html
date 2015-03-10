@@ -1,60 +1,27 @@
-{% from "macros.html" import show_photos, iterform %} {% extends "layout.html" %}
-<script type="text/javascript" src="{{ url_for('static', filename='new.js') }}"></script>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
- {% block body %}
-<table>
-<tr>
-	{% if not current_user.is_authenticated() %}
-	<!-- display login form -->
-	<td class=options>
-		<div class="login">
-			<div class="container">
-				<div id="login">
-					<form method="POST" action="/login/" id="loginform">
-						<fieldset class="clearfix">
-							<p>
-								<span class="fontawesome-user"></span>
-								<input type="text" value="Username" name="name" onblur="if(this.value == '') this.value = 'Username'" onfocus="if(this.value == 'Username') this.value = ''" required>
-							</p>
-							<!-- JS because of IE support; better: placeholder="Username" -->
-							<p>
-								<span class="fontawesome-lock"></span>
-								<input type="password" value="Password" name="password" onblur="if(this.value == '') this.value = 'Password'" onfocus="if(this.value == 'Password') this.value = ''" required>
-							</p>
-							<!-- JS because of IE support; better: placeholder="Password" -->
-							<p>
-								<input type="submit" value="Sign In">
-							</p>
-						</fieldset>
-					</form>
-					<p>
-						Not a member? <a href="#">Sign up now</a><span class="fontawesome-arrow-right"></span>
-					</p>
-				</div>
-				<!-- end login -->
-			</div>
-		</div>
-	 </td> 
-		<!-- end login class-->
-		 {% else %}
-		 <!-- display other forms -->
-    <td class=options>
-		 <div class=upload>
-			<h2>Upload</h2>
-			<form type="loginform" method="POST" action="/photos/" enctype="multipart/form-data">
-				 {{ iterform(upload_form) }}
-			</form>
-		</div>
-		<div class=search>
-			<h2>Search</h2>
-			<form method="GET" action="/photos/" id="photoform">
-				 {{ iterform(search_form) }}
-			</form>
-		</div>
-    </td>
-	<td class=photos id=photos>
-	</td>
-	 {% endif %} 
-</tr>
-</table>
+{% from "macros.html" import iterform %}
+
+{% extends "layout.html" %}
+{% block body %}
+  <table>
+    <tr>
+      <td class=options>
+          {% if upload_form %}
+            <div class=upload>
+              <h2>Upload</h2>
+              <form method="POST" action="/photos/" enctype="multipart/form-data" id="uploadform">
+              {{ iterform(upload_form) }}
+              </form>
+            </div>
+          {% endif %}
+          <div class=search>
+            <h2>Search</h2>
+            <form method="GET" action="/photos/" id="photoform">
+              {{ iterform(search_form) }}
+            </form>
+          </div>
+      </td>
+      <td class=photos id=photos>
+      </td>
+    </tr>
+  </table>
 {% endblock %}

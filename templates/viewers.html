@@ -3,7 +3,7 @@
 {% extends "layout.html" %}
 {% block body %}
   <h2>Viewers</h2>
-  <form method="POST" action="{{ url_for('default.makeviewers') }}" id="makeviewersform">
+  <form method="POST" action="{{ url_for('owner.viewers') }}" id="makeviewersform">
   {{ iterform(form) }}
   </form>
   {{ show_viewers(viewers) }}

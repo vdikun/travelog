@@ -1,0 +1,45 @@
+{% from "macros.html" import iterform %}
+
+<!doctype html>
+<head>
+    <title>Travelog</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='login.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='new.js') }}"></script>
+</head>
+
+<table><tr>
+<!-- display login form -->
+	<td class=options>
+		<div class="login">
+			<div class="container">
+				<div id="login">
+					<form method="POST" action="/login/" id="loginform">
+						<fieldset class="clearfix">
+							<p>
+								<span class="fontawesome-user"></span>
+								<input type="text" value="Username" name="name" onblur="if(this.value == '') this.value = 'Username'" onfocus="if(this.value == 'Username') this.value = ''" required>
+							</p>
+							<!-- JS because of IE support; better: placeholder="Username" -->
+							<p>
+								<span class="fontawesome-lock"></span>
+								<input type="password" value="Password" name="password" onblur="if(this.value == '') this.value = 'Password'" onfocus="if(this.value == 'Password') this.value = ''" required>
+							</p>
+							<!-- JS because of IE support; better: placeholder="Password" -->
+							<p>
+								<input type="submit" value="Sign In">
+							</p>
+						</fieldset>
+					</form>
+					<p>
+						Not a member? <a href="#">Sign up now</a><span class="fontawesome-arrow-right"></span>
+					</p>
+				</div>
+				<!-- end login -->
+			</div>
+		</div>
+	</td> 
+	<!-- end login class-->
+</tr></table>
+
+</html>

@@ -1,7 +1,7 @@
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 #from wtforms.fields import FileField
 from wtforms import Form, StringField, PasswordField, DateField, FloatField
-from wtforms.validators import ValidationError
+from wtforms.validators import ValidationError, Email, Required, EqualTo, Length
 from config import ALLOWED_EXTENSIONS
 import os
 
@@ -52,3 +52,15 @@ class SearchForm(Form):
 class LoginForm(Form):
     name = StringField('username')
     password = PasswordField('password')
+
+class RegistrationForm(Form):
+    name = StringField('username')
+    password = PasswordField(
+        'password',
+        [
+            Length(min=3),
+            Required(),
+            EqualTo('confirm', message='Passwords must match')
+        ])
+    confirm = PasswordField('confirm password')
+    email = StringField('email', [Email(), Required()])

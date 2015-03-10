@@ -25,5 +25,6 @@ create table phototag (
 create table users (
     id integer primary key autoincrement,
     name text unique not null,
-    password text not null
+    password text not null,
+    email text not null unique
 );

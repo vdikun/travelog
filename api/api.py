@@ -77,12 +77,14 @@ class PhotoList(restful.Resource):
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
         file = request.files['photo']
         redirect = ("redirectme" in request.form)
-        
+        print file
+        print "andy\n"
         if not file:
             return 404, "No file"
         if not allowed_file(file.filename):
             return 404, "Bad file extension"
-            
+
+        
         # Make the filename safe, remove unsupported chars
         filename = secure_filename(file.filename)
         # insert temporary record in database
@@ -95,3 +97,6 @@ def init_api(app):
     api = restful.Api(app)        
     api.add_resource(PhotoList, '/photos/')
     api.add_resource(Photo, '/photos/<string:photo_id>')
+
+
+

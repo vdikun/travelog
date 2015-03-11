@@ -1,4 +1,4 @@
-DATABASE = '/tmp/travelog.db'
+DATABASE = '/var/lib/sqlite3/travelog.db'
 DATABASEURI = 'sqlite:///' + DATABASE
 DEBUG = True
 SECRET_KEY = "ihavethepants"
@@ -9,4 +9,3 @@ UPLOAD_FOLDER = "./static/img/"
 IMG_DIR = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = ['jpg']
-

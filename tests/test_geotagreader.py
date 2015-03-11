@@ -1,5 +1,5 @@
-from models.geotagreader import GeoTagReader
-from models.utils import get_photo_fname
+from models.photo import GeoTagReader
+from models.photo.utils import get_photo_fname
 
 P_UPLOADED = 1
 

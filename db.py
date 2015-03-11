@@ -27,6 +27,15 @@ class PhotoTag(Base):
     
 class User(Base, UserMixin):
     __table__ = Table('users', metadata, autoload=True)
+
+    def is_owner(self):
+        return self.owner
+
+    def is_viewer(self):
+        return not self.is_owner()
+    
+class ViewerRelation(Base):
+    __table__ = Table('viewers', metadata, autoload=True)
     
 def connect_db(app):
     print "connect_db: %s" % app.config['DATABASE']

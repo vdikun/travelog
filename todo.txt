@@ -1,0 +1,11 @@
+travelog to-do
+
+0.   AJAX redirect for upload form
+1.   batch upload
+1.5. thumbnails
+2.   place points on map
+2.5. use threads instead of celery
+3.   authentication for both consumer and producer
+3.5. view photos using lightbox
+4.   reset password on account using email
+5.   admin account to manage other accounts

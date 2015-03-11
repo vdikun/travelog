@@ -2,6 +2,7 @@ drop table if exists phototag;
 drop table if exists photos;
 drop table if exists tags;
 drop table if exists users;
+drop table if exists viewers;
 create table tags (
     id integer primary key autoincrement,
     text text unique not null
@@ -13,7 +14,8 @@ create table photos (
     date_uploaded datetime default null,
     lat float default null,
     lon float default null,
-    uploaded integer not null default 0
+    o_id integer,
+    foreign key (o_id) references users(id) ON DELETE CASCADE
 );
 create table phototag (
     p_id integer,
@@ -26,5 +28,6 @@ create table users (
     id integer primary key autoincrement,
     name text unique not null,
     password text not null,
-    email text not null unique
+    email text not null unique,
+    owner boolean not null default 1
 );

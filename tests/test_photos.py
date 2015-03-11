@@ -7,7 +7,6 @@ from mock import Mock, patch
 
 # domain stuff
 from models.photo import *
-from models.photo.tasks import update_photo_metadata
 from app import make_app
 from db import Photo, Tag, PhotoTag
 import db
@@ -23,7 +22,7 @@ TEST_IMG_DIR = "./static/test/"
 
 P_NONE = 15
 P_UPLOADED = 1
-P_NOT_UPLOADED = 2
+P_NOT_UPLOADED = 3
 
 class TestPhotoFunctions:
 
@@ -44,7 +43,9 @@ class TestPhotoFunctions:
         shutil.rmtree(TEST_IMG_DIR)
     
     def test_new_photo_placeholder(self):
-        photo = new_photo_placeholder()
+        user = Mock()
+        user.id = 1
+        photo = new_photo_placeholder(user)
         assert(photo.id == 4) # kind of a stupid test, but...
     
     @nottest    
@@ -76,7 +77,6 @@ class TestPhotoFunctions:
         photo_id = P_NOT_UPLOADED
         # look at Photo in db
         photo = get_photo(photo_id)
-        assert (photo.uploaded == 0)
         assert (photo.date_uploaded is None)
         assert (photo.date_created is None)
         assert (photo.ext is None)
@@ -84,7 +84,6 @@ class TestPhotoFunctions:
         update_photo_metadata(photo_id, ext, dt_uploaded)
         # assert that metadata is updated
         photo = get_photo(photo_id)
-        assert (photo.uploaded == 1)
         assert (photo.date_uploaded == dt_uploaded)
         assert (photo.date_created is not None)
         assert (photo.ext == "jpg")
@@ -104,7 +103,7 @@ class TestPhotoFunctions:
     @nottest    
     def test_upload_image(self):
         ext = 'jpg'
-        with patch('update_photo_metadata.delay') as mock_task:
+        with patch('update_photo_metadata') as mock_task:
             fname = get_photo_fname(P_NONE, ext)
             assert not isfile(fname)
             upload_image(P_NONE, 'xxy', ext)

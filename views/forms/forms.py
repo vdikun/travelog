@@ -5,6 +5,8 @@ from wtforms.validators import ValidationError, Email, Required, EqualTo, Length
 from config import ALLOWED_EXTENSIONS
 import os
 
+from customfields import TagListField
+
 class UploadPhotoForm(Form):
 
     photo = FileField('photo', [FileRequired("Where is the file!!"), FileAllowed(['jpg'], 'JPG images only')])
@@ -64,3 +66,7 @@ class RegistrationForm(Form):
         ])
     confirm = PasswordField('confirm password')
     email = StringField('email', [Email(), Required()])
+    
+class MakeViewersForm(Form):
+    emails = TagListField('emails')
+    password = StringField('password')

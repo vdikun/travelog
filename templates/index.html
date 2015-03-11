@@ -1,11 +1,27 @@
-{% from "macros.html" import show_photos, render_form %}
+{% from "macros.html" import iterform %}
 
 {% extends "layout.html" %}
 {% block body %}
-  {% if current_user.is_authenticated() %}
-    {{ render_form(upload_form, "/upload/", enctype="multipart/form-data") }}
-  {% else %}
-    {{ render_form(login_form, "/login/") }}
-  {% endif %}
-  {{ show_photos(photos) }}
+  <table>
+    <tr>
+      <td class=options>
+          {% if upload_form %}
+            <div class=upload>
+              <h2>Upload</h2>
+              <form method="POST" action="/photos/" enctype="multipart/form-data" id="uploadform">
+              {{ iterform(upload_form) }}
+              </form>
+            </div>
+          {% endif %}
+          <div class=search>
+            <h2>Search</h2>
+            <form method="GET" action="/photos/" id="photoform">
+              {{ iterform(search_form) }}
+            </form>
+          </div>
+      </td>
+      <td class=photos id=photos>
+      </td>
+    </tr>
+  </table>
 {% endblock %}

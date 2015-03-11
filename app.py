@@ -5,14 +5,20 @@ from flask import Flask, request, session, g, redirect, url_for, \
  
 from flask.ext.login import LoginManager
      
-from views import default
+from views import default, owner, viewer
 
 from models.user import get_user
 
 from api import init_api
 
+from db import connect_db
+
+from serveremail import mail
+
 DEFAULT_BLUEPRINTS = (
     default,
+    owner,
+    viewer
 )
 
 def configure_login(app):
@@ -54,15 +60,34 @@ def configure_error_handlers(app):
         db.session.rollback()
         return render_template('error/500.html'), 500
 
+def make_db_connections(app):
+
+    @app.before_request
+    def before_request():
+        g.db = connect_db(app)
+
+    @app.teardown_request
+    def teardown_request(exception):
+        db = getattr(g, 'db', None)
+        if db is not None:
+            db.close()
+
+def init_mail(app):
+    mail.init_app(app)
+
 def make_app():
     app = Flask(__name__)
-    app.config.from_object('config')
+    app.config.from_object('travelog.config')
     configure_blueprints(app, DEFAULT_BLUEPRINTS)
     configure_error_handlers(app)
     configure_login(app)
     add_site_map(app)
     init_api(app)
+    init_mail(app)
+    make_db_connections(app)
     return app
+
+
     
 app = make_app()
 

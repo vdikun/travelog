@@ -43,10 +43,12 @@ $(function() {
     });
     
     // autoload
-    // TODO restrict this function to running only on selected pages.
+    // TODO restrict to specific pages/contexts
+    /*
     $.get( "/photos/", function( response ) {
       get_photo_success( response );
     });
+    */
     
     // upload photos
     /*

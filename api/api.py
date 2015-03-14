@@ -62,13 +62,13 @@ class PhotoList(restful.Resource):
         parser.add_argument('enddate', type=mydate, help="End of date range")
         parser.add_argument('lat', type=myfloat, help="Latitude of center")
         parser.add_argument('lon', type=myfloat, help="Longitude of center")
-        parser.add_argument('rad', type=myfloat, help='Radius from center in some arbitrary units', default=5)
+        parser.add_argument('zoom', type=myfloat, help='Google Maps zoom level', default=9)
         self.get_parser = parser
 
     @login_required
     def get(self):
         args = self.get_parser.parse_args()
-        photos = get_photos(current_user, args.tags, args.startdate, args.enddate, args.lat, args.lon, args.rad)
+        photos = get_photos(current_user, args.tags, args.startdate, args.enddate, args.lat, args.lon, args.zoom)
         print "getting %s photos" % len(photos)
         return [to_json(photo) for photo in photos]
     

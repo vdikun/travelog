@@ -1,5 +1,8 @@
 from db import session, User, ViewerRelation
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, or_, exc
+
+class NewUserError(Exception):
+	pass
 
 
 '''
@@ -24,19 +27,24 @@ def get_user(uid):
     user = session.query(User).filter(User.id==uid).first()
     return user
 
-
 '''
 creates new User tuple and inserts into DB
-returns None on failure, User object otherwise
+returns User object
 '''
-def make_user(name, password):
-    user = User(name=name, password=password)
-    session.add(user)
-    try: 
-        session.commit()
-        return user
-    except:
-        return None
+def register_user(name, password, email):
+	user = User(name=name, password=password, email=email)
+	session.add(user)
+	try:
+		session.commit()
+	except exc.IntegrityError, e:
+		session.rollback()
+		if 'users.email' in e.message:
+			raise NewUserError("That email is taken. Please try again")
+		elif 'users.name' in e.message:
+			raise NewUserError("That username is taken. Please try again")
+		else:
+			raise NewUserError("Something went wrong. Please try again")
+	return user
 
     
 '''
@@ -68,7 +76,7 @@ def get_owner(viewer):
 creates new Viewer tuple and inserts into DB
 '''        
 def make_viewer(owner, email, password):
-    viewer = User(name=email, password=password, owner=False)
+    viewer = User(name=email, password=password, email=email, owner=False)
     session.add(viewer)
     session.commit()
     constraint = ViewerRelation(v_id=viewer.id, o_id=owner.id)

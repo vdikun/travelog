@@ -28,6 +28,7 @@ create table users (
     id integer primary key autoincrement,
     name text unique not null,
     password text not null,
+    email text not null unique,
     owner boolean not null default 1
 );
 /* 

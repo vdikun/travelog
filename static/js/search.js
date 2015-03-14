@@ -1,6 +1,11 @@
 /* defines functionality of photo search form */
+ 
+  var map_view_selected = true;
+  var photos = [];
 
-  search_tags = [];
+  /* what do with photos */
+
+  var search_tags = [];
 
   function refresh_tags() {
     $( ".search_tag" ).remove();
@@ -85,15 +90,17 @@
     });
 
     /* implements hover on buttons */
-    $(document).on("mouseenter", ".button", function() {
-        $( this ).removeClass("button");
-        $( this ).addClass("button_hover");
-    });
-
-    $(document).on("mouseleave", ".button", function() {
-        $( this ).removeClass("button_hover");
-        $( this ).addClass("button");
-    });
+    // TODO make this work for dynamically generated elements >:(
+  $(".button").bind({
+    mouseenter: function () {
+      $( this ).removeClass("button");
+      $( this ).addClass("button_hover");
+    },
+    mouseleave: function () {
+      $( this ).removeClass("button_hover");
+      $( this ).addClass("button");
+    }
+  });
 
   // solution from http://stackoverflow.com/a/7385673
   $(document).mouseup(function (e)
@@ -110,5 +117,24 @@
 
   hideMap(); 
 
+  /* AJAX */
+
+    $('#searchForm').submit( function() {
+
+        $.ajax({
+            url     : $(this).attr('action'),
+            type    : $(this).attr('method'),
+            data    : $(this).serialize(),
+            success : function( photos ) {
+                viewManager.display_photos(photos);
+              }
+        });
+
+        return false;
+    });
+
+    /* view handler */
+    //viewManager = new ViewManager();
+    //viewManager.init("searchResults", photos, map_view_selected);
 
 });

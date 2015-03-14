@@ -7,6 +7,7 @@
 <script type=text/javascript src="{{ url_for('static', filename='./js/jquery-gmaps-latlon-picker.js') }}" ></script>
 <script type=text/javascript src="{{ url_for('static', filename='./js/zebra_datepicker.js') }}" ></script>
 <script type=text/javascript src="{{ url_for('static', filename='./js/tinycolor.js') }}" ></script>
+<script type=text/javascript src="{{ url_for('static', filename='./js/ViewManager.js') }}" ></script>
 <script type=text/javascript src="{{ url_for('static', filename='./js/search.js') }}" ></script>
 <!-- end scripts -->
 
@@ -20,16 +21,16 @@
 
 This is the new and improved search page.
 <p>
-<input id="toggleMap" type="submit" value="Map view"/>
-<input id="toggleMosaic" type="submit" value="Mosaic view"/>
+<input id="toggleMap" type="submit" value="Map view" onclick="viewManager.toggle()"/>
+<input id="toggleMosaic" type="submit" value="Mosaic view" onclick="viewManager.toggle()"/>
 <table><tr>
 <td id="search_content" class="search">
 <form id="searchForm" method="GET" action="/photos/">
     <div class="search_param" id="search_tags">
         <div class="search_tags float">
+            <input type="hidden" id="tags" name="tags"/>
             tags: 
             <input id="tag_input"></input>
-            <input type="hidden" id="tags" name="tags"/>
             <div class="button float" id="tag_submit">+</div>
         </div>
     </div>
@@ -40,6 +41,7 @@ This is the new and improved search page.
     </div>
     <div class="search_param" id="search_location">
         <div class="button" onClick="showMap()">location and radius</div>
+        <div class="button" style="float"></div>
         <div class="container">
             <div class="outer">
                 <div class="inner" id="latlngpicker">
@@ -54,8 +56,8 @@ This is the new and improved search page.
         </div>
     </div>
     <div id=search_buttons>
-        <input class="button_wide submit left" id="search_submit" name="search_submit" type="submit" value="Submit"/>
-        <!--<input class="button_wide reset right" id="search_reset" name="search_reset" type="submit" value="Reset"/>-->
+        <input class="button_wide submit left" id="searchButton" name="searchButton" type="submit" value="Submit"/>
+        <!--<input class="button_wide reset right" id="searchButton" name="searchReset" type="submit" value="Reset"/>-->
     </div>
 </form>
 </td>

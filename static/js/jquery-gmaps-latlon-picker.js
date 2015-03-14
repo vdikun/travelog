@@ -58,10 +58,6 @@ var GMapsLatLonPicker = (function() {
 		marker : null,
 		geocoder : null
 	};
-	
-	getMap = function() {
-	    return _self.vars.map;
-	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	// PRIVATE FUNCTIONS FOR MANIPULATING DATA ////////////////////////////////////////////////////
@@ -150,6 +146,10 @@ var GMapsLatLonPicker = (function() {
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	// PUBLIC FUNCTIONS  //////////////////////////////////////////////////////////////////////////
 	var publicfunc = {
+
+		getMap: function() {
+	    	return _self.vars.map;
+		},
 
 		// INITIALIZE MAP ON DIV //////////////////////////////////////////////////////////////////
 		init : function(object) {
@@ -245,7 +245,10 @@ var GMapsLatLonPicker = (function() {
 
 $(document).ready( function() {
 	$(".gllpLatlonPicker").each(function() {
-		new GMapsLatLonPicker().init( $(this) );
+		picker = new GMapsLatLonPicker();
+		picker.init( $(this) );
+		map = picker.getMap();
+		//new GMapsLatLonPicker().init( $(this) );
 	});
 });
 

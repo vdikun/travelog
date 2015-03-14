@@ -1,0 +1,173 @@
+/* fonts */
+
+html
+{
+	font-size: medium;
+}
+h1
+{
+	font-size: 2em;
+}
+h2
+{
+	font-size: 1.5em;
+}
+h3
+{
+	font-size: 1.17em;
+}
+h5
+{
+	font-size: .83em;
+}
+h6
+{
+	font-size: .75em;
+}
+
+/* elements */
+
+/* stupid */
+
+html, body 
+{ 
+	height: 100%
+}
+
+.v-top
+{
+	vertical-align: top;
+}
+
+.float
+{
+	display: inline-block;
+}
+
+input
+{
+	/*height: 1em;
+	width: 6em;*/
+}
+
+/* content */
+
+#outer
+{
+	background: #999999;
+	height: 140%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+}
+#inner
+{
+	background: #dddddd;
+	height: 50%;
+	width: 50%;
+}
+
+/* search */
+
+.searchheader
+{
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+.search
+{
+	background: white;
+	border: 1px #999999 solid;
+}
+.search_param
+{
+	background: white;
+	border: 1px #eeeeee solid;
+}
+#search_bar
+{
+	height: 1em;
+}
+#search_content
+{
+	/*visibility: hidden;*/
+}
+
+/* inner search elements */
+
+#search_buttons
+{
+	display: table;
+	float: bottom;
+	width: 100%;
+	height: 1em;
+}
+.button_wide
+{
+	/*background: #dddddd;
+	border: 1px white solid;
+	display: table-cell;
+	height: 100%;*/
+	width: 50%;
+}
+.button {
+	background: #eeeeee;
+	border-radius: 10px;
+	text-align: center;
+}
+.button_hover {
+	background: #aaaaaa;
+	border-radius: 10px;
+	text-align: center;
+}
+.button_active {
+	border-radius: 10px;
+	text-align: center;
+	text-align: center;
+	border: 1px #999999 solid;
+}
+
+/* search by tags */
+
+.search_tag
+{
+    background: #eeeeee;
+    border-radius: 10px;
+    height: 1em;
+    margin: 0.2em;
+}
+.search_tag_close
+{
+	height: 1em;
+	width: 1em;
+}
+#tag_submit
+{
+	height: 1em;
+	width: 1em;
+}
+
+/* search mappicker */
+
+.container {
+	position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; 
+	width: 500px; /* pick whatever width you want */
+}
+.container .outer {
+    width: 100%;
+    padding-top: 50%; /* defines aspect ratio */
+    position: relative;
+}
+.container .outer .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

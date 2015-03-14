@@ -5,8 +5,9 @@ from flask.ext.login import login_required, login_user, current_user, logout_use
 
 # domain specific
 from forms import LoginForm, SearchForm, RegistrationForm
-from models.photo import load_all_photos, get_photos
+from models.photo import load_all_photos, get_photos, get_photo, load_photo
 from models.user import authenticate_user
+from models.permissions import can_view_photo
 import config
 
 default = Blueprint('default', __name__, url_prefix='')
@@ -87,7 +88,7 @@ def register():
 @default.route('/photo/<photo_id>')
 @login_required
 def show_photo(photo_id):
-    if not can_view_photo(current_user):
+    if not can_view_photo(current_user, get_photo(photo_id)):
         raise AuthenticationError("You are not authorized to view this photo")
     photo = load_photo(photo_id)
     return render_template('show_photo.html', photo=photo)

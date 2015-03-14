@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template, redirect, session, request, url_for
+from flask import Blueprint, render_template, redirect, session, request, url_for, flash
 from flask.ext.login import login_required, login_user, current_user, logout_user
 
 # domain specific
@@ -57,13 +57,13 @@ def index():
 """ search """
 """ POST: gets filtered photos from db
 """    
-@default.route('/search/', methods=['GET', 'POST'])
+@default.route('/search/', methods=['GET'])
 @login_required
 def search():
     photos = []
     form = SearchForm(request.form)
-    if request.method == 'POST' and form.validate():
-        photos = get_photos(current_user, form.tags.data, form.startdate.data, form.enddate.data)
+    #if request.method == 'POST' and form.validate():
+    #    photos = get_photos(current_user, form.tags.data, form.startdate.data, form.enddate.data)
     return render_template('search.html', form=form, photos=photos)
 
 

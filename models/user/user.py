@@ -76,7 +76,7 @@ def get_owner(viewer):
 creates new Viewer tuple and inserts into DB
 '''        
 def make_viewer(owner, email, password):
-    viewer = User(name=email, password=password, owner=False)
+    viewer = User(name=email, password=password, email=email, owner=False)
     session.add(viewer)
     session.commit()
     constraint = ViewerRelation(v_id=viewer.id, o_id=owner.id)

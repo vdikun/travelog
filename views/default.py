@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, redirect, session, request, url_fo
 from flask.ext.login import login_required, login_user, current_user, logout_user
 
 # domain specific
-from forms import LoginForm, SearchForm
+from forms import LoginForm, SearchForm, RegistrationForm
 from models.photo import load_all_photos, get_photos
 from models.user import authenticate_user
 import config
@@ -65,6 +65,20 @@ def search():
     if request.method == 'POST' and form.validate():
         photos = get_photos(current_user, form.tags.data, form.startdate.data, form.enddate.data)
     return render_template('search.html', form=form, photos=photos)
+
+
+@default.route('/register/', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        try:
+            user = register_user(form.name.data, form.password.data, form.email.data)
+        except Exception, e:
+            flash(e.message)
+            return render_template('register.html', form=form)
+        login_user(user)
+        return redirect(url_for('default.index'))
+    return render_template('register.html', form=form)
 
 
 """ photo

@@ -1,0 +1,42 @@
+<link rel="stylesheet" type="text/css" href="search_button.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="search_button.js"></script>
+
+
+
+
+
+<!-- heirarchy: #cuboid > form > div*4(cuboid faces) -->
+<div id="cuboid">
+	<form>
+		<!-- #1 hover button -->
+		<div >
+			<p class="cuboid-text">Search</p>
+		</div>
+		<!-- #2 text input -->
+		<div>
+			<!-- Label to trigger #submit -->
+			<label for="submit" class="submit-icon">
+				<i class="fa fa-chevron-right"></i>
+			</label>
+			<input type="text" id="keywords" class="cuboid-text" placeholder="What Do You Want To See?" autocomplete="off"/>
+			<!-- hidden submit button -->
+			<input type="submit" id="submit" />
+		</div>
+		<!-- #3 loading message -->
+		<div>
+			<p class="cuboid-text loader">Just a moment</p>
+		</div>
+		<!-- #4 success message -->
+		<div>
+			<!-- reset/retry button -->
+			<span class="reset-icon"><i class="fa fa-refresh"></i></span>
+			<p class="cuboid-text">Thankyou, we'll be in touch</p>
+		</div>
+	</form>
+</div>
+
+<!-- jQuery -->
+
+
+

@@ -28,6 +28,7 @@ create table users (
     id integer primary key autoincrement,
     name text unique not null,
     password text not null,
+    email text not null unique,
     owner boolean not null default 1
 );
 /* 
@@ -65,4 +66,4 @@ INSERT INTO phototag VALUES (2, 7);
 INSERT INTO phototag VALUES (3, 7);
 INSERT INTO phototag VALUES (3, 6);
 
-INSERT INTO users (name, password) VALUES ('admin', 'password');
+INSERT INTO users (name, password, email) VALUES ('admin', 'password', 'vdikun@hotmail.com');

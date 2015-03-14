@@ -1,0 +1,66 @@
+{% from "macros.html" import iterform %}
+
+{% extends "layout.html" %}
+{% block body %}
+<!-- scripts -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type=text/javascript src="{{ url_for('static', filename='./js/jquery-gmaps-latlon-picker.js') }}" ></script>
+<script type=text/javascript src="{{ url_for('static', filename='./js/zebra_datepicker.js') }}" ></script>
+<script type=text/javascript src="{{ url_for('static', filename='./js/tinycolor.js') }}" ></script>
+<script type=text/javascript src="{{ url_for('static', filename='./js/search.js') }}" ></script>
+<!-- end scripts -->
+
+<!-- styling -->
+<!-- zebra datepicker -->
+<link rel="stylesheet" href="{{ url_for('static', filename='./css/zebra_default.css') }}" type="text/css">
+<!-- end of zebra datepicker -->
+<!-- mappicker -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/jquery-gmaps-latlon-picker.css') }}"/>
+<!-- end of mappicker -->
+
+This is the new and improved search page.
+<p>
+<input id="toggleMap" type="submit" value="Map view"/>
+<input id="toggleMosaic" type="submit" value="Mosaic view"/>
+<table><tr>
+<td id="search_content" class="search">
+<form id="searchForm" method="GET" action="/photos/">
+    <div class="search_param" id="search_tags">
+        <div class="search_tags float">
+            tags: 
+            <input id="tag_input"></input>
+            <input type="hidden" id="tags" name="tags"/>
+            <div class="button float" id="tag_submit">+</div>
+        </div>
+    </div>
+    <div class="search_param" id="search_dates">
+        <input class="datepicker float date_input" id="date_from" name="startdate"></input>
+        <div class="float" id="from_to_arrow">&lt;--&gt;</div>
+        <input class="datepicker float date_input" id="date_to" name="enddate"></input>
+    </div>
+    <div class="search_param" id="search_location">
+        <div class="button" onClick="showMap()">location and radius</div>
+        <input class="gllpLatitude" name="lat"/>
+        <input class="gllpLongitude" name="lon"/>
+        <input class="gllpZoom" name="rad"/>
+        <div class="container">
+            <div class="outer">
+                <div class="inner" id="latlngpicker">
+                    <fieldset class="gllpLatlonPicker">
+                    <div class="gllpMap">Google Maps</div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id=search_buttons>
+        <input class="button_wide submit left" id="search_submit" name="search_submit" type="submit" value="Submit"/>
+        <!--<input class="button_wide reset right" id="search_reset" name="search_reset" type="submit" value="Reset"/>-->
+    </div>
+</form>
+</td>
+<td id="searchResults" class="v-top">
+No photos to display.
+</td>
+</tr></table>
+{% endblock %}

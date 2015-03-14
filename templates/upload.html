@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+  <head>
+    <title>
+      Travelog
+    </title>
+    <!--<link rel=stylesheet type=text/css href="{{ url_for('static', filename='upload.css') }}"> 
+	-->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='upload.js') }}"></script>
+
+  </head>
+  
+  <body>
+
+     <!-- <form action="http://127.0.0.1/photos/" method="POST" enctype= "multipart/form-data" id="uploadform">
+
+      <span class="field"><label for="photo">photo</label>:</span>
+      <span class="input"><input id="photo" name="photo" type="file" multiple ></span>
+
+  
+    <div class=formspan>
+      <span class="field"><label for="tags">tags</label>:</span>
+      <span class="input"><input id="tags" name="tags" type="text" value=""></span>
+    </div>
+    
+  <input type="submit" value="Submit" >
+
+</form>
+
+-->
+<!--<form id="uploadform" action="http://127.0.0.1:5000/photos/" method="POST" enctype="multipart/form-data"> -->
+<form id="uploadform">
+  <input type="file" id="photo" name="photo" />
+    <input id="uploadbutton" type="submit" value="Upload"/>
+</form>
+
+</body>
+

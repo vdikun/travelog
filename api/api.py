@@ -77,21 +77,28 @@ class PhotoList(restful.Resource):
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
         file = request.files['photo']
         redirect = ("redirectme" in request.form)
-        
         if not file:
             return 404, "No file"
         if not allowed_file(file.filename):
             return 404, "Bad file extension"
-            
+
+        
         # Make the filename safe, remove unsupported chars
         filename = secure_filename(file.filename)
         # insert temporary record in database
-        new_filename = process_new_photo(fileext(file.filename), tags, current_user)
+        file.save(os.path.join(config.UPLOAD_FOLDER, filename))
+        new_filename = process_new_photo(filename, fileext(file.filename), tags, current_user)
+        
         # Move the file from the temporary folder to the upload folder we setup
-        file.save(os.path.join(config.UPLOAD_FOLDER, new_filename))
+        os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
+
         return {"success": True, "file": new_filename}
 
 def init_api(app):
     api = restful.Api(app)        
     api.add_resource(PhotoList, '/photos/')
     api.add_resource(Photo, '/photos/<string:photo_id>')
+
+
+
+

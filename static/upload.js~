@@ -25,7 +25,7 @@ function test(){
 
 $(document).ready(function () {
     $("#uploadbutton").click(function () {
-        var filename = $("#photo").val();
+        var filename = $("#file").val();
 
         $.ajax({
             type: "POST",
@@ -41,26 +41,3 @@ $(document).ready(function () {
     });
 });
 
-
-
-
-$("form#uploadform").submit(function(){
-
-    var formData = new FormData($(this).serialize());
-    console.log("andy")
-    console.log(formData)
-    $.ajax({
-        url: "http://127.0.0.1:5000/photos/",
-        type: 'POST',
-        data: formData,
-	enctype: 'multipart/form-data',
-        success: function (data) {
-            alert(data)
-        },
-        cache: false,
-        contentType: false,
-        processData: false
-    });
-
-    return false;
-});

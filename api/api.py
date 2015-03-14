@@ -73,25 +73,36 @@ class PhotoList(restful.Resource):
         return [to_json(photo) for photo in photos]
     
     @login_required
-    def post(self):           
+    def post(self):
+        file = request.files.getlist('photo[]')
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
-        file = request.files['photo']
+
         redirect = ("redirectme" in request.form)
-        if not file:
-            return 404, "No file"
-        if not allowed_file(file.filename):
-            return 404, "Bad file extension"
-
         
-        # Make the filename safe, remove unsupported chars
-        filename = secure_filename(file.filename)
-        # insert temporary record in database
-        file.save(os.path.join(config.UPLOAD_FOLDER, filename))
-        new_filename = process_new_photo(filename, fileext(file.filename), tags, current_user)
         
-        # Move the file from the temporary folder to the upload folder we setup
-        os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
 
+        for i in file:
+            print dir(i)
+            if not i:
+                return 404, "No file"
+            if not allowed_file(i.filename):
+                return 404, "Bad file extension"
+            # Make the filename safe, remove unsupported chars
+            filename = secure_filename(i.filename)
+
+            ### Well if you want to carry on with this you have to make sure
+            ### that the file name origionally does not exist in this folder
+            ### so additional code should be written to realize that function
+            ### I'm not writting today.
+            
+            # insert temporary record in database
+            i.save(os.path.join(config.UPLOAD_FOLDER, filename))
+            new_filename = process_new_photo(filename, fileext(i.filename), tags, current_user)
+    
+            # Move the file from the temporary folder to the upload folder we setup
+            os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
+
+        ### Also the return value should change according to all these things
         return {"success": True, "file": new_filename}
 
 def init_api(app):

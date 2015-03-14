@@ -1,27 +1,43 @@
 <!doctype html>
 <title>Travelog</title>
 <!--<link rel=stylesheet type=text/css href="/static/style.css">-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="upload.js"></script> 
+
+
 <div class=page>
   <h1>Travelog</h1> 
   
-                  <div class=upload>
-                  <h2>Upload</h2>
-                  <form method="POST" action="http://127.0.0.1:5000/photos/" enctype="multipart/form-data" id=uploadform>
-                  
-  
-    <div class=formspan>
-    <span class="field"><label for="photo">photo</label>:</span> <span class="input"><input id="photo" name="photo" type="file"></span>
-    </div>
-  
-    <div class=formspan>
-    <span class="field"><label for="tags">tags</label>:</span> <span class="input"><input id="tags" name="tags" type="text" value=""></span>
-    </div>
-  
-  
-  <input type="submit" value="Submit">
+    <div class=upload>
+      <h2>Upload</h2>
 
-                  </form>
-                </div>
+
+                  
+ <form method="POST" action="http://127.0.0.1:5000/photos/" enctype="multipart/form-data" id="uploadform" >
+
+   <div class=formspan>
+      <span class="field"><label for="photo">photo</label>:</span>
+      <span class="input"><input id="photo" name="photo[]" type="file" multiple></span>
+   </div>
+      
+    <div class=formspan>
+      <span class="field"><label for="tags">tags</label>:</span>
+      <span class="input"><input id="tags" name="tags" type="text" value=""></span>
+    </div>
+    
+    <input type="submit" value="Submit">
+
+  </form>
+
+  
+
+    </div>
+
+
+
+   
 
 
 </div>
+
+

@@ -12,7 +12,7 @@ class NoSuchObjectException(Exception):
 
 def in_radius(p1_lat, p1_lon, p2_lat, p2_lon, rad):
     if (not p1_lat) or (not p1_lon):
-        return false
+        return False
     d_lat = p1_lat - p2_lat
     d_lon = p1_lon - p2_lon
     dist = math.sqrt(pow(d_lat,2) + pow(d_lon,2))

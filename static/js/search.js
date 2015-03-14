@@ -126,7 +126,7 @@
             type    : $(this).attr('method'),
             data    : $(this).serialize(),
             success : function( photos ) {
-                viewManager.display_photos(photos);
+                viewManager.reload(photos);
               }
         });
 
@@ -134,7 +134,7 @@
     });
 
     /* view handler */
-    //viewManager = new ViewManager();
-    //viewManager.init("searchResults", photos, map_view_selected);
+    viewManager = new ViewManager();
+    viewManager.init(photos, map_view_selected);
 
 });

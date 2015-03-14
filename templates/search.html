@@ -14,7 +14,6 @@
 <!-- styling -->
 <!-- zebra datepicker -->
 <link rel="stylesheet" href="{{ url_for('static', filename='./css/zebra_default.css') }}" type="text/css">
-<!-- end of zebra datepicker -->
 <!-- mappicker -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/jquery-gmaps-latlon-picker.css') }}"/>
 <!-- end of mappicker -->
@@ -63,6 +62,9 @@ This is the new and improved search page.
 </td>
 <td id="searchResults" class="v-top">
 No photos to display.
+<div id="mapView" class="test">
+</div>
+<div id="mosaicView" class="test"></div>
 </td>
 </tr></table>
 {% endblock %}

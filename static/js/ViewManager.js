@@ -1,51 +1,62 @@
 /*
- *  functions for search page display logic
- *  and possibly the most rambling JS class i've ever written
- *  may the Lord have mercy on my soul
- */
 
- var ViewManager = (function() {
+the order of things.
+
+page load: create container divs in divs. (do this in html).
+
+
+#searchResults
+  #mapView
+  #mosaicView
+  
  
- 	var that = this; // ??!!
+initialization:
+load #mapView and #mosaicView with photos array. (do this on form return.)
+
+toggle.
+
+
+toggle:
+    hide one of the divs. show the other div.
+    
+the end
+
+
+*/
+
+var ViewManager = (function() {
 
 	img_mosaic = "../static/img/mosaic.png";
 	img_globe = "../static/img/globe.png";
 	img_marker = "../static/img/point.png";
 
-	that.mapview_id = "mapView";
-	that.mosaicview_id = "mosaicView";
-	that.mapview_toggle_id = "mapToggle";
-	that.mosaicview_toggle_id = "mosaicToggle";
+	var photoUrlBase = "../photo/";
+	var photoSrcBase = "../static/img/"; 	
 
+	var getPhotoUrl = function(photo) {
+		return photoUrlBase + photo.id;
+	};
 
-	var PhotoManager = (function() {
+	var getPhotoSrc = function(photo) {
+		return photoSrcBase + photo.id + "." + photo.ext;
+	};
 
-		var photoUrlBase = "../photo/";
-		var photoSrcBase = "../static/img/"; //TODO change to '/img/photo/'
+	var getCenter = function(photos) {
+		var latitudes = [],
+			longitudes = [];
 
-		var publicfunc = {
+		$(photos).each(function(index, photo) {
+			latitudes.push(photo.lat);
+			longitudes.push(photo.lon);
+		});
 
-			// TODO
-			getCenter: function(photos) {
-				return new google.maps.LatLng(18, 32);
-			},
+		var minLat = Math.min.apply(null, latitudes),
+   			maxLat = Math.max.apply(null, latitudes),
+			minLon = Math.min.apply(null, longitudes),
+			maxLon = Math.max.apply(null, longitudes);
 
-			// TODO
-			getZoom: function(photos) {
-				return 9;
-			},
-            
-			getPhotoUrl: function(photo) {
-				return photoUrlBase + photo.id;
-			},
-
-			getPhotoSrc: function(photo) {
-				return photoSrcBase + photo.id + "." + photo.ext;
-			}
-		};
-		return publicfunc;
-
-	});
+		return new google.maps.LatLng((minLat + maxLat)/2,(minLon + maxLon)/2);
+	};
 
 	var PathManager = (function() {
 		var publicfunc = {
@@ -59,145 +70,84 @@
 		return publicfunc;
 	});
 
- 	goto = function(url) {
- 		window.location.href = url;
- 	};
+	var that = this;
 
-	display_view = function() {
-
-	    if(that.map_view) {
-	        $('#' + that.mapview_id).show();
-			$('#' + that.mosaicview_toggle_id).show();
-			$('#' + that.mosaicview_id).hide();
-			$('#' + that.mapview_toggle_id).hide();
-	    } else {
-	        $('#' + that.mosaicview_id).show();
-			$('#' + that.mapview_toggle_id).show();
-	        $('#' + that.mapview_id).hide();
-			$('#' + that.mosaicview_toggle_id).hide();
-	    }
-	};
-
- 	init_toggle_icons = function() {
-		// toggle map icon
-		$('<img/>', {
-		    id: that.mapview_toggle_id,
-		    src: img_globe,
-		    onClick: toggle,
-		    position: "absolute",
-		    left: "50px",
-		    bottom: "50px"
-		}).appendTo(that.selector);
-
-		// toggle mosaic icon
-		$('<img/>', {
-		    id: that.mosaicview_toggle_id,
-		    src: img_mosaic,
-		    onClick: toggle,
-		    position: "absolute",
-		    left: "50px",
-		    bottom: "50px"
-		}).appendTo(that.selector);
-
-		// hide newly created elements until they are needed
-		$("#" + that.mosaicview_toggle_id).hide();
-		$("#" + that.mapview_toggle_id).hide();	
- 	};
-
- 	init_map_view = function() {
-
-		var myDiv = document.createElement('div');
-		myDiv.id = that.mapview_id;
-		document.body.appendChild(myDiv);
-
-		map = new google.maps.Map(document.getElementById(that.mapview_id), {
-			center: that.pm.getCenter(that.photos),
-			zoom: that.pm.getZoom(that.photos),
-			mapTypeId: 'roadmap'
-			});
-
-		var markers = [];
-		var locations = [];
-
-		$( that.photos ).each(function( index, value ) {
-		  var location = new google.maps.LatLng(value.lat,value.lng);
-		  locations.push(location);
-		  var marker = new google.maps.Marker({
-						map: map,
-						position: location,
-						icon: img_marker
-					});
-		  google.maps.event.addListener(marker, 'click', function() {
-		    goto(that.pm.getPhotoUrl(photo.id));
-		  });
-		  markers.push(marker);
-		});
-
-		var path = [];
-
-		for (var i=0; i++; i<locations.length-1) {
-			var line = new google.maps.Polyline({
-			    path: [locations[i], locations[i+1]],
-			    geodesic: true,
-			    strokeColor: that.pathManager.getPathColor(i, locations.length),
-			    strokeOpacity: that.pathManager.getPathOpacity(i, locations.length),
-			    strokeWeight: 2
-			  });
-			line.setMap(map);
-			path.push(line);
-		} 		
- 	};
-
-	init_mosaic_view = function() {
-
-		container = $('<div/>', {
-		    id: that.mosaicview_id
-		});
-
-		if (that.photos) {
-			$( that.photos ).each(function( index, photo ) {
-				$("<img />")
-				 .attr({
-				   "src": that.pm.getPhotoSrc(photo),
-				   "class": 'photo_thumb float'
-				 })
-				 .wrap('<a href="' + that.pm.getPhotoUrl(photo) + '"/>')
-				 .parent()
-				 .appendTo(container);
-			});
-		} else {
-			(container).append("<p>No photos found.<\p>");
-		}	
-
-		container.appendTo("#" + that.selector);
-	};
-
-	var toggle = function(map_view) {
-		alert("toggle");
+	var init = function(photos, map_view) {
 		that.map_view = map_view;
-		display_view();
+		reload(photos);
 	};
-	that.toggle = toggle;
 
-	var init = function(selector, photos, map_view) {
-
- 		that.selector = selector;
- 		that.photos = photos;
- 		that.map_view = map_view;
- 		that.pm = new PhotoManager();
- 		that.pathManager = new PathManager();
-
- 		$("#" + that.selector).empty();
- 		init_map_view();
-		init_mosaic_view();
-		init_toggle_icons();
-
-		display_view();
-	};
 	that.init = init;
 
-	that.display_photos = function (photos) {
-		that.init(that.selector, photos, that.map_view);
+	var reload = function(photos) {
+		console.log("displaying " + photos.length + " photos");
+		init_map_view(photos);
+		init_mosaic_view(photos);
+		display_view();
 	}
+
+	that.reload = reload;
+
+	var init_map_view = function(photos) {
+		$("#map-canvas").remove();
+		$('<div/>', {
+		    id: 'map-canvas',
+		    class: "map test",
+		    height: "400px",
+		    width: "700px"
+		}).appendTo('#mapView');
+
+		if (photos.length > 0) {
+		  var mapOptions = {
+		    zoom: 9,
+		    center: getCenter(photos)
+		  };
+		  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+			var markers = [];
+			var locations = [];
+
+			$( photos ).each(function( index, photo ) {
+			  var location = new google.maps.LatLng(photo.lat,photo.lon);
+			  locations.push(location);
+			  var marker = new google.maps.Marker({
+							map: map,
+							position: location,
+							icon: img_marker
+						});
+			  google.maps.event.addListener(marker, 'click', function() {
+			    window.location.href = getPhotoUrl(photo.id);
+			  });
+			  markers.push(marker);
+			});
+		} else {
+			$("#map-canvas").text("no photos!");
+		}
+		$("#mapView").append("Map view is initalized");
+	}
+
+	var init_mosaic_view = function(photos) {
+		$("#mosaicView").text("Mosaic view is initalized");	
+	}
+
+	var display_view = function() {
+		if (that.map_view) {
+			$("#mapView").show();
+			$("#mosaicView").hide();
+			$("#toggleMosaic").show();
+			$("#toggleMap").hide();
+		} else {
+			$("#mapView").hide();
+			$("#mosaicView").show();
+			$("#toggleMosaic").hide();
+			$("#toggleMap").show();
+		}
+	}
+
+	var toggle = function() {
+		that.map_view = !that.map_view;
+		display_view();
+	}
+	that.toggle = toggle;
 
 });

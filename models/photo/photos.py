@@ -162,7 +162,7 @@ def get_photos(user, tags, start, end, lat, lon, zoom):
         tags = [tag.strip() for tag in tags.split(',')]
         print "tags: ", tags
         for tag in tags:
-            photos = filter(lambda x: tag in x.tags, photos)
+            photos = filter(lambda photo: (lambda photo_tag: tag in photo_tag, photo), photos)
     # filter by start date
     if start:
         print "start: ", start
@@ -173,5 +173,6 @@ def get_photos(user, tags, start, end, lat, lon, zoom):
         photos = filter(lambda x: x.date_created <= end, photos)
     # filter by geolocation
     if lat and lon and zoom:
-        photos = filter(lambda x: in_radius(x, lat, lon, zoom), photos)
+        rad = 6.0/zoom # 6.0 is some arbitrary number, hope it works :B
+        photos = filter(lambda x: in_radius(x.lat, x.lon, lat, lon, zoom), photos)
     return photos

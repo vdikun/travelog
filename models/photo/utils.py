@@ -10,11 +10,11 @@ from datetime import datetime
 class NoSuchObjectException(Exception):
     pass
 
-def in_radius(photo, lat, lon, radius):
-    factor = 10.0
-    rad = radius / factor
-    d_lat = photo.lat - lat
-    d_lon = photo.lon - lon
+def in_radius(p1_lat, p1_lon, p2_lat, p2_lon, rad):
+    if (not p1_lat) or (not p1_lon):
+        return false
+    d_lat = p1_lat - p2_lat
+    d_lon = p1_lon - p2_lon
     dist = math.sqrt(pow(d_lat,2) + pow(d_lon,2))
     return dist <= rad
 

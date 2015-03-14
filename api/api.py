@@ -78,9 +78,6 @@ class PhotoList(restful.Resource):
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
 
         redirect = ("redirectme" in request.form)
-<<<<<<< HEAD
-        
-        
 
         for i in file:
             print dir(i)
@@ -104,27 +101,6 @@ class PhotoList(restful.Resource):
             os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
 
         ### Also the return value should change according to all these things
-=======
-        print file
-        print "andy\n"
-        if not file:
-            return 404, "No file"
-        if not allowed_file(file.filename):
-            return 404, "Bad file extension"
-
-        
-        # Make the filename safe, remove unsupported chars
-        filename = secure_filename(file.filename)
-        # insert temporary record in database
-        print filename
-        print "filename is the above one"
-        file.save(os.path.join(config.UPLOAD_FOLDER, filename))
-        new_filename = process_new_photo(filename, fileext(file.filename), tags, current_user)
-        
-        # Move the file from the temporary folder to the upload folder we setup
-        os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
-
->>>>>>> 849704e16e9477b9ed37d6ee711009319c1f526f
         return {"success": True, "file": new_filename}
 
 def init_api(app):

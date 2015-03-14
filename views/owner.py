@@ -30,7 +30,7 @@ def owner_required(f):
 def index():
     upload_form = UploadPhotoForm()
     search_form = SearchForm(request.form)
-    return render_template('index.html', upload_form=upload_form, search_form=search_form)
+    return render_template('upload.html', upload_form=upload_form, search_form=search_form)
 
 
 """ viewers

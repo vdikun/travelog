@@ -1,10 +1,11 @@
 """ minimal RESTful API for Photos """
 """ supports POST /photos, GET /photos/<id>, DELETE /photos/<id> """
 
-from flask import request
+from flask import request, redirect, url_for
 from flask.ext import restful
 from flask.ext.restful import reqparse, fields
 from werkzeug.utils import secure_filename
+from flask import render_template
 
 from models.photo import load_photo_json, to_json, process_new_photo, delete_photo, get_photos
 
@@ -77,7 +78,7 @@ class PhotoList(restful.Resource):
         file = request.files.getlist('photo[]')
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
 
-        redirect = ("redirectme" in request.form)
+        #redirect = ("redirectme" in request.form)
 
         for i in file:
             print dir(i)
@@ -101,7 +102,8 @@ class PhotoList(restful.Resource):
             os.rename(os.path.join(config.UPLOAD_FOLDER, filename),os.path.join(config.UPLOAD_FOLDER, new_filename))
 
         ### Also the return value should change according to all these things
-        return {"success": True, "file": new_filename}
+        #return {"success": True, "file": new_filename}
+        return redirect(url_for('owner.index'))
 
 def init_api(app):
     api = restful.Api(app)        

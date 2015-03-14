@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 //$("submitPhoto").onClick()=uploadPhoto();
 function uploadPhoto(){
@@ -65,7 +64,7 @@ $("form#uploadform").submit(function(){
 
     return false;
 });
-=======
+
 //$("submitPhoto").onClick()=uploadPhoto();
 
 function uploadPhoto(){
@@ -102,4 +101,5 @@ function receivedText() {
     //result = fr.result;
     document.getElementById('editor').appendChild(document.createTextNode(fr.result))
 }   
->>>>>>> 849704e16e9477b9ed37d6ee711009319c1f526f
+
+

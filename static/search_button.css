@@ -65,7 +65,7 @@ h1 {font-weight: normal; font-size: 36px; margin-bottom: 75px;}
 	/*smooth transitions when user activates input and types something*/
 	transition: all 0.5s;
 	/*to make the icons feel like buttons*/
-	cursor: default;
+	cursor: auto;
 }
 /*.active = when the user is typing something*/
 .submit-icon.active {color: hsl(120, 40%, 30%);}

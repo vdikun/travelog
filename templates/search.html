@@ -40,14 +40,14 @@ This is the new and improved search page.
     </div>
     <div class="search_param" id="search_location">
         <div class="button" onClick="showMap()">location and radius</div>
-        <input class="gllpLatitude" name="lat"/>
-        <input class="gllpLongitude" name="lon"/>
-        <input class="gllpZoom" name="rad"/>
         <div class="container">
             <div class="outer">
                 <div class="inner" id="latlngpicker">
                     <fieldset class="gllpLatlonPicker">
-                    <div class="gllpMap">Google Maps</div>
+                        <div class="gllpMap">Google Maps</div>
+                        <input type="hidden" class="gllpLatitude" name="lat"/>
+                        <input type="hidden" class="gllpLongitude" name="lon"/>
+                        <input type="hidden" class="gllpZoom" name="rad"/>
                     </fieldset>
                 </div>
             </div>

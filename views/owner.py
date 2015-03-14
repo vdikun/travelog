@@ -53,7 +53,10 @@ def makeviewers():
     form = MakeViewersForm(request.form)
     if form.validate():
         make_viewers(current_user, form.emails.data, form.password.data)
-        email_new_viewers(current_user, form.emails.data, form.password.data)
+        try:
+            email_new_viewers(current_user, form.emails.data, form.password.data)
+        except:
+            flash("something went wrong. are you sure those emails are correct?")
     return viewers()
 
 

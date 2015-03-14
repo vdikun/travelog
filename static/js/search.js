@@ -1,6 +1,6 @@
 /* defines functionality of photo search form */
 
-  search_tags = ["Monty Python"];
+  search_tags = [];
 
   function refresh_tags() {
     $( ".search_tag" ).remove();

@@ -17,7 +17,8 @@
           <td class=metanav>
           {% if current_user.is_authenticated() %}
             Logged in as {{ current_user.name }}, 
-            {% if current_user.is_owner() %}owner{% else %}viewer.{% endif %} 
+            {% if current_user.is_owner() %}owner{% else %}viewer.{% endif %}
+            {% if current_user.is_owner() %}<a href="{{ url_for('owner.viewers') }}">Manage viewers</a>{% endif %} 
             <a href="{{ url_for('default.logout') }}">log out?</a>
           {% endif %}
           </td>

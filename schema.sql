@@ -31,3 +31,14 @@ create table users (
     email text not null unique,
     owner boolean not null default 1
 );
+/* 
+ * owner can have many viewers.
+ * viewer has 1 owner.  
+ */
+create table viewers (
+    id integer primary key autoincrement,
+    v_id integer not null unique,
+    o_id integer, 
+    foreign key (o_id) references users(id) ON DELETE CASCADE,
+    foreign key (v_id) references users(id) ON DELETE CASCADE
+);

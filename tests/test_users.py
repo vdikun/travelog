@@ -14,6 +14,7 @@ import config
 
 u_name = "testname"
 u_pwd = "testpassword"
+u_email = "useremail@something.com"
 email = "test@em.com"
 v_pwd = "viewerpassword"
 
@@ -33,7 +34,7 @@ class TestUserFunctions:
         pass
     
     def test_stuff(self):
-        u = user.make_user(u_name, u_pwd)
+        u = user.register_user(u_name, u_pwd, u_email)
         assert (u is not None)
         assert (u == user.find_user(u_name, u_pwd))
         

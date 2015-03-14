@@ -1,12 +1,13 @@
 /* defines functionality of photo search form */
 
-  search_tags = [];
+  search_tags = ["Monty Python"];
 
   function refresh_tags() {
     $( ".search_tag" ).remove();
     $.each( search_tags, function(index, value) {
         display_tag(value);
     });
+    $('#tags').val(search_tags.join());
   }
 
   function display_tag(value) {
@@ -21,21 +22,22 @@
     $.each( tags, function( index, value ) {
         tag = value.trim();
         search_tags.push(tag);
-        display_tag(tag);
+        display_tag(tag);        
     });
+    $('#tags').val(search_tags.join());
   }
 
     /* mappicker */
- 	function showMap() {
-		$("#latlngpicker").show();
-		var center = map.getCenter();
-		google.maps.event.trigger(map, 'resize');
-		map.setCenter(center); 
-	}
+  function showMap() {
+    $("#latlngpicker").show();
+    var center = map.getCenter();
+    google.maps.event.trigger(map, 'resize');
+    map.setCenter(center); 
+  }
 
-	function hideMap() {
-		$("#latlngpicker").hide();
-	}
+  function hideMap() {
+    $("#latlngpicker").hide();
+  }
 
 
   $(function() {
@@ -72,44 +74,41 @@
     });
 
     /* remove search tags */
-    $( ".search_tag_close" ).click(function() {
-      // selects tag value
-      tag = $(this).parent().contents().get(0).nodeValue;
-      $(this).parent().remove();               
-        var index = search_tags.indexOf(tag);
-        if (index != -1) {
-            search_tags.splice(index, 1);
-        }
+    $('#search_tags').on('click', '.search_tag_close', function () {
+        tag = $(this).parent().contents().get(0).nodeValue;
+        $(this).parent().remove();               
+          var index = search_tags.indexOf(tag);
+          if (index != -1) {
+              search_tags.splice(index, 1);
+          }
+          $('#tags').val(search_tags.join());
     });
 
     /* implements hover on buttons */
-    $( ".button" ).hover(
-      function() {
+    $(document).on("mouseenter", ".button", function() {
         $( this ).removeClass("button");
         $( this ).addClass("button_hover");
-      }, function() {
+    });
+
+    $(document).on("mouseleave", ".button", function() {
         $( this ).removeClass("button_hover");
         $( this ).addClass("button");
+    });
+
+  // solution from http://stackoverflow.com/a/7385673
+  $(document).mouseup(function (e)
+  {
+    //alert(map);
+      var container = $("#latlngpicker");
+
+      if (!container.is(e.target) // if the target of the click isn't the container...
+          && container.has(e.target).length === 0) // ... nor a descendant of the container
+      {
+          container.hide();
       }
-    );
+  });
 
-    /* mappicker */
-	map = getMap();
-
-	// solution from http://stackoverflow.com/a/7385673
-	$(document).mouseup(function (e)
-	{
-		//alert(map);
-	    var container = $("#latlngpicker");
-
-	    if (!container.is(e.target) // if the target of the click isn't the container...
-	        && container.has(e.target).length === 0) // ... nor a descendant of the container
-	    {
-	        container.hide();
-	    }
-	});
-
-	hideMap(); 
+  hideMap(); 
 
 
 });

@@ -14,6 +14,7 @@
   <img src="{{ photo.img_uri }}" class=photo_img>
   {% if show_tags %}
     <div class=tags>
+    Tags: 
     {% for tag in photo.tags %}
       {{ tag|safe }}, 
     {% else %}

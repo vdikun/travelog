@@ -175,7 +175,11 @@ input
 .photo_thumb
 {
     height: 150px;
-    
+}
+
+.photo_img
+{
+    width: 100%;
 }
 
 /* test */

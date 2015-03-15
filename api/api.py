@@ -76,6 +76,8 @@ class PhotoList(restful.Resource):
     @login_required
     def post(self):           
         tags = [tag.strip() for tag in request.form['tags'].split(',')]
+        if tags == '':
+            tags = None
         file = request.files['photo']
         redirect = ("redirectme" in request.form)
         

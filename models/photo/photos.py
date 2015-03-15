@@ -153,6 +153,7 @@ def load_all_photos():
 
 # implements filter on photos    
 def get_photos(user, tags, start, end, lat, lon, zoom):
+    #print (user, tags, start, end, lat, lon, zoom)
     # it's really really dumb to load all photos...but for now it is ok.
     photos = load_all_photos()
     # permissions!
@@ -173,6 +174,6 @@ def get_photos(user, tags, start, end, lat, lon, zoom):
         photos = filter(lambda x: x.date_created <= end, photos)
     # filter by geolocation
     if lat and lon and zoom:
-        rad = 6.0/zoom # 6.0 is some arbitrary number, hope it works :B
-        photos = filter(lambda x: in_radius(x.lat, x.lon, lat, lon, zoom), photos)
+        rad = 180.0/zoom # some arbitrary number, hope it works :B
+        photos = filter(lambda x: in_radius(x.lat, x.lon, lat, lon, rad), photos)
     return photos

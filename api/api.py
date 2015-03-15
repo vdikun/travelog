@@ -68,6 +68,7 @@ class PhotoList(restful.Resource):
     @login_required
     def get(self):
         args = self.get_parser.parse_args()
+        print args
         photos = get_photos(current_user, args.tags, args.startdate, args.enddate, args.lat, args.lon, args.zoom)
         print "getting %s photos" % len(photos)
         return [to_json(photo) for photo in photos]

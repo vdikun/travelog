@@ -91,6 +91,7 @@ var ViewManager = (function() {
 
 	var init_map_view = function(photos) {
 		$("#map-canvas").remove();
+		$("#mapView").empty();
 		$('<div/>', {
 		    id: 'map-canvas',
 		    class: "map test",

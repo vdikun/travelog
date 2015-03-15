@@ -37,6 +37,7 @@
     $("#latlngpicker").show();
     var center = map.getCenter();
     google.maps.event.trigger(map, 'resize');
+    console.log(center);
     map.setCenter(center); 
   }
 

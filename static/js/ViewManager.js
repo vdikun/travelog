@@ -61,9 +61,10 @@ var ViewManager = (function() {
 	var PathManager = (function() {
 		var publicfunc = {
 			getPathColor: function(i, len) {
-				return tinycolor("RED").darken(i*100/len);
+				return tinycolor("#000000").lighten(25*i/len).toString();
 			},
 			getPathOpacity: function(i, len) {
+				console.log(1 - (i/len));
 				return 1 - (i/len);
 			}
 		};
@@ -125,13 +126,15 @@ var ViewManager = (function() {
 			 });
 
 			var path = [];
+			var pm = new PathManager();
 
 			for (var i=0; i<locations.length-1; i++) {
 				var line = new google.maps.Polyline({
 				    path: [locations[i], locations[i+1]],
 				    geodesic: true,
-				    strokeColor: "#ff0000",
-				    strokeOpacity: 1.0,
+				    strokeColor: pm.getPathColor(i, locations.length),
+				    strokeOpacity: pm.getPathOpacity(i, locations.length),
+				    //strokeOpacity: 0.1,
 				    strokeWeight: 2
 				  });
 				line.setMap(map);

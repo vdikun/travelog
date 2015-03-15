@@ -61,7 +61,7 @@ var ViewManager = (function() {
 	var PathManager = (function() {
 		var publicfunc = {
 			getPathColor: function(i, len) {
-				return "red";
+				return tinycolor("RED").darken(i*100/len);
 			},
 			getPathOpacity: function(i, len) {
 				return 1 - (i/len);
@@ -99,7 +99,7 @@ var ViewManager = (function() {
 
 		if (photos.length > 0) {
 		  var mapOptions = {
-		    zoom: 9,
+		    zoom: 1,
 		    center: getCenter(photos)
 		  };
 		  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
@@ -137,6 +137,7 @@ var ViewManager = (function() {
 				line.setMap(map);
 				path.push(line);
 			}
+
 
 		} else {
 			$("#map-canvas").text("no photos!");

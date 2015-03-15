@@ -22,6 +22,8 @@
 
 <body>
 
+<a href = "http://127.0.0.1:5000/logout/">Log Out</a>
+
 
 <!-- heirarchy: #cuboid > form > div*4(cuboid faces) -->
 <div id="cuboid">
@@ -58,28 +60,37 @@
 <div class=page>
   <div class=upload>
     <h2> upload  </h2>
+
+    <div class="uoload">
+      <div class="container">
+    
     <form method="POST" action="http://127.0.0.1:5000/photos/" enctype="multipart/form-data" id="uploadform" >
 
+      <fieldset class="clearfix">
 
 
-      <div class="formspan">
-      <span class="field"><label for="photo"></label></span>
-      <span class="input"><input id="photo"  class="custom-file-input" name="photo[]" type="file" multiple></span>
+      <div class="formspan"><p>
+      <input id="photo"   name="photo[]" type="file" multiple></p>
    </div>
 
 
-    <div class="formspan">
+    <div class="formspan"><p>
       <span class="field"><label for="tags">tags</label>:</span>
       <span class="input"><input id="tags" name="tags" value=""></span>
+      </p>
     </div>
 
 
+    <p>
     <input type="submit" value="Submit">
-
+    </p>
+    </fieldset>
     
   </form>
 
 
+      </div>
+      </div>
 
 
 

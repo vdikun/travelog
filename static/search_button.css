@@ -18,6 +18,7 @@ h1 {font-weight: normal; font-size: 36px; margin-bottom: 75px;}
 .fun-cube i {transform: scale(10); opacity: 0.1;}
 
 #cuboid {
+    
 	width: 400px; margin: 0 auto;
 	/*this also makes #cuboid a container for absolutely positioned descendants*/
 	perspective: 1000px;

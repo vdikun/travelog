@@ -30,6 +30,9 @@ var ViewManager = (function() {
 	img_globe = "../static/img/globe.png";
 	img_marker = "../static/img/point.png";
 
+	var height = 400;
+	var width = 700;
+
 	var photoUrlBase = "../photo/";
 	var photoSrcBase = "../static/img/"; 	
 
@@ -41,30 +44,12 @@ var ViewManager = (function() {
 		return photoSrcBase + photo.id + "." + photo.ext;
 	};
 
-	var getCenter = function(photos) {
-		var latitudes = [],
-			longitudes = [];
-
-		$(photos).each(function(index, photo) {
-			latitudes.push(photo.lat);
-			longitudes.push(photo.lon);
-		});
-
-		var minLat = Math.min.apply(null, latitudes),
-   			maxLat = Math.max.apply(null, latitudes),
-			minLon = Math.min.apply(null, longitudes),
-			maxLon = Math.max.apply(null, longitudes);
-
-		return new google.maps.LatLng((minLat + maxLat)/2,(minLon + maxLon)/2);
-	};
-
 	var PathManager = (function() {
 		var publicfunc = {
 			getPathColor: function(i, len) {
 				return tinycolor("#000000").lighten(25*i/len).toString();
 			},
 			getPathOpacity: function(i, len) {
-				console.log(1 - (i/len));
 				return 1 - (i/len);
 			}
 		};
@@ -89,22 +74,57 @@ var ViewManager = (function() {
 
 	that.reload = reload;
 
+	var getMapOptions = function(photos) {
+
+			var latitudes = [],
+			longitudes = [];
+
+		$(photos).each(function(index, photo) {
+			latitudes.push(photo.lat);
+			longitudes.push(photo.lon);
+		});
+
+		var minLat = Math.min.apply(null, latitudes),
+   			maxLat = Math.max.apply(null, latitudes),
+			minLon = Math.min.apply(null, longitudes),
+			maxLon = Math.max.apply(null, longitudes);
+
+		console.log([minLat, maxLat, minLon, maxLon]);
+
+		var center = new google.maps.LatLng((minLat + maxLat)/2,(minLon + maxLon)/2);
+
+		var GLOBE_WIDTH = 256; // a constant in Google's map projection
+		var west = minLon;
+		var east = maxLon;
+		var angle = east - west;
+		if (angle < 0) {
+		  angle += 360;
+		}
+
+		var pixelWidth = $("#mapView").width();
+		var zoom = Math.round(Math.log(width * 360 / angle / GLOBE_WIDTH) / Math.LN2);
+		console.log([zoom, center]);
+
+		return {
+			zoom: zoom,
+			center: center
+		}
+
+
+	}
+
 	var init_map_view = function(photos) {
 		$("#map-canvas").remove();
 		$("#mapView").empty();
 		$('<div/>', {
 		    id: 'map-canvas',
 		    class: "map test",
-		    height: "400px",
-		    width: "700px"
+		    height: height + "px",
+		    width: width + "px"
 		}).appendTo('#mapView');
 
 		if (photos.length > 0) {
-		  var mapOptions = {
-		    zoom: 1,
-		    center: getCenter(photos)
-		  };
-		  map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+		  map = new google.maps.Map(document.getElementById("map-canvas"), getMapOptions(photos));
 
 			var markers = [];
 			var locations = [];

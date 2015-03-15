@@ -113,13 +113,31 @@ var ViewManager = (function() {
 			  var marker = new google.maps.Marker({
 							map: map,
 							position: location,
-							icon: img_marker
+							icon: img_marker,
+							size: new google.maps.Size(32, 32),
+							origin: new google.maps.Point(0,0),
+							anchor: new google.maps.Point(16,16)
 						});
 			  google.maps.event.addListener(marker, 'click', function() {
-			    window.location.href = getPhotoUrl(photo.id);
+			    window.location.href = getPhotoUrl(photo);
 			  });
 			  markers.push(marker);
-			});
+			 });
+
+			var path = [];
+
+			for (var i=0; i<locations.length-1; i++) {
+				var line = new google.maps.Polyline({
+				    path: [locations[i], locations[i+1]],
+				    geodesic: true,
+				    strokeColor: "#ff0000",
+				    strokeOpacity: 1.0,
+				    strokeWeight: 2
+				  });
+				line.setMap(map);
+				path.push(line);
+			}
+
 		} else {
 			$("#map-canvas").text("no photos!");
 		}

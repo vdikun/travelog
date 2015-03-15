@@ -78,7 +78,8 @@ def new_photo_placeholder(user):
 
 # uploads Photo image to file system
 def update_image(photo_id, tags, ext, date_uploaded, filename):
-    add_tags(photo_id, tags)
+    if tags:
+        add_tags(photo_id, tags)
     update_photo_metadata(photo_id, ext, date_uploaded, filename)
     
 # updates metadata of Photo object in db

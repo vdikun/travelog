@@ -6,7 +6,7 @@ from flask.ext.login import login_required, login_user, current_user, logout_use
 # domain specific
 from forms import LoginForm, SearchForm, RegistrationForm
 from models.photo import load_all_photos, get_photos, get_photo, load_photo
-from models.user import authenticate_user
+from models.user import authenticate_user, register_user
 from models.permissions import can_view_photo
 import config
 

@@ -2,5 +2,7 @@
 
 {% extends "layout.html" %}
 {% block body %}
+  <form method="POST" action="{{ url_for('default.register') }}">
   {{ iterform(form) }}
+  </form>
 {% endblock %}

@@ -1,0 +1,43 @@
+
+//$("submitPhoto").onClick()=uploadPhoto();
+function uploadPhoto(){
+    console.log('new');
+    var content = document.getElementById("form");
+    console.log(content);
+    $.ajax({
+	type: "POST",
+	timeout: 50000,
+	url: "http://127.0.0.1:5000/photos/",
+	data: content,
+	success: function (data) {
+            alert('success');
+            return false;
+	}
+    });
+
+}
+
+
+function test(){
+    
+    console.log($("photo").file);
+}
+
+$(document).ready(function () {
+    $("#uploadbutton").click(function () {
+        var filename = $("#file").val();
+
+        $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:5000/photos/",
+            enctype: 'multipart/form-data',
+            data: {
+                file: filename
+            },
+            success: function () {
+                alert("Data Uploaded: ");
+            }
+        });
+    });
+});
+

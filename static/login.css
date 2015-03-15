@@ -121,3 +121,16 @@ p {
 #login > p span {
   padding-left: 5px;
 }
+
+#uploadform form span {
+  background-color: #363b41;
+  border-radius: 3px 0px 0px 3px;
+  color: #606468;
+  display: block;
+  float: left;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+}
+

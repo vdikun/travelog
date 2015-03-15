@@ -1,12 +1,90 @@
 <!DOCTYPE html>
-<html>
-<head>
+  <head>
+    <title>
 
-</head>
+      Travelog
+
+    </title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='upload.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='search_button.css') }}">
+
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='login.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='upload.css') }}">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700">  
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='upload.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='search_button.js')}}"></script>
+
+  </head>
+  
+
 <body>
-<div class="button-green"><input class="file-upload" type="file">Upload File</div>
 
 
+<!-- heirarchy: #cuboid > form > div*4(cuboid faces) -->
+<div id="cuboid">
+	<form>
+		<!-- #1 hover button -->
+		<div >
+			<p class="cuboid-text">Search</p>
+		</div>
+		<!-- #2 text input -->
+		<div>
+			<!-- Label to trigger #submit -->
+			<label for="submit" class="submit-icon">
+				<i class="fa fa-chevron-right"></i>
+			</label>
+			<input type="text" id="keywords" class="cuboid-text" placeholder="What Do You Want To See?" autocomplete="off"/>
+			<!-- hidden submit button -->
+			<input type="submit" id="submit" />
+		</div>
+		<!-- #3 loading message -->
+		<div>
+			<p class="cuboid-text loader">Just a moment</p>
+		</div>
+		<!-- #4 success message -->
+		<div>
+			<!-- reset/retry button -->
+			<span class="reset-icon"><i class="fa fa-refresh"></i></span>
+			<p class="cuboid-text">Thankyou, we'll be in touch</p>
+		</div>
+	</form>
+</div>
+
+
+  
+<div class=page>
+  <div class=upload>
+    <h2> upload  </h2>
+    <form method="POST" action="http://127.0.0.1:5000/photos/" enctype="multipart/form-data" id="uploadform" >
+
+
+
+      <div class="formspan">
+      <span class="field"><label for="photo"></label></span>
+      <span class="input"><input id="photo"  class="custom-file-input" name="photo[]" type="file" multiple></span>
+   </div>
+
+
+    <div class="formspan">
+      <span class="field"><label for="tags">tags</label>:</span>
+      <span class="input"><input id="tags" name="tags" value=""></span>
+    </div>
+
+
+    <input type="submit" value="Submit">
+
+    
+  </form>
+
+
+
+
+
+    </div>
+    </div>
+  
 </body>
-</html>
 

@@ -63,10 +63,10 @@ def load_photo(id):
 """ upload functions """
 
 # called by API Photo POST request, returns new Photo's filename
-def process_new_photo(ext, tags, user):
+def process_new_photo(filename, ext, tags, user):
     photo_id = new_photo_placeholder(user).id
     date_uploaded = datetime.now()
-    update_image(photo_id, tags, ext, date_uploaded)
+    update_image(photo_id, tags, ext, date_uploaded, filename)
     return str(photo_id) + "." + ext
 
 # makes placeholder Photo object, stores to db, returns Photo
@@ -77,13 +77,14 @@ def new_photo_placeholder(user):
     return photo
 
 # uploads Photo image to file system
-def update_image(photo_id, tags, ext, date_uploaded):
+def update_image(photo_id, tags, ext, date_uploaded, filename):
     add_tags(photo_id, tags)
-    update_photo_metadata(photo_id, ext, date_uploaded)
+    update_photo_metadata(photo_id, ext, date_uploaded, filename)
     
 # updates metadata of Photo object in db
-def update_photo_metadata(photo_id, photo_ext, date_uploaded):
-    photo_fname = get_photo_fname(photo_id, photo_ext)
+def update_photo_metadata(photo_id, photo_ext, date_uploaded, filename):
+
+    photo_fname = get_photo_fname(filename[0:len(filename)-4], photo_ext)
     # read metadata: geolocation, date created
     gtr = GeoTagReader(photo_fname)
     try:

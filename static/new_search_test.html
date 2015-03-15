@@ -1,0 +1,119 @@
+
+
+<!doctype html>
+<head>
+    <title>Travelog</title>
+    <link rel=stylesheet type=text/css href="/static/css/main.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,700">    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" ></script>
+    <script type=text/javascript src="/static/js/script.js" ></script>
+</head>
+
+<table class=wrapper><tr><td>
+<table class=page>
+  <tr>
+    <td>
+      <table class=header>
+        <tr>
+          <td class=title><h1>Travelog</h1></td>
+          <td class=metanav>
+          
+            Logged in as admin, 
+            owner
+            <a href="/owner/viewers/">Manage viewers</a> 
+            <a href="/logout/">log out?</a>
+          
+          </td>
+        </tr>
+      </table>
+      <table class=flash><tr><td>
+        
+      </td></tr></table>
+    </td>
+  </tr>
+  <tr>
+    <td class=body>
+      
+<!-- scripts -->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type=text/javascript src="/static/js/jquery-gmaps-latlon-picker.js" ></script>
+<script type=text/javascript src="/static/js/zebra_datepicker.js" ></script>
+<script type=text/javascript src="/static/js/tinycolor.js" ></script>
+<script type=text/javascript src="/static/js/search.js" ></script>
+<!-- end scripts -->
+
+<!-- styling -->
+<!-- zebra datepicker -->
+<link rel="stylesheet" href="/static/css/zebra_default.css" type="text/css">
+<!-- end of zebra datepicker -->
+<!-- mappicker -->
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-gmaps-latlon-picker.css"/>
+<!-- end of mappicker -->
+
+This is the new and improved search page.
+<p>
+<input id="toggleMap" type="submit" value="Map view"/>
+<input id="toggleMosaic" type="submit" value="Mosaic view"/>
+<table><tr>
+<td id="search_content" class="search">
+<form id="searchForm" method="GET" action="/photos/">
+    <div class="search_param" id="search_tags">
+        <div class="search_tags float">
+            tags: 
+            <input id="tag_input"></input>
+            <input type="hidden" id="tags" name="tags"/>
+            <div class="button float" id="tag_submit">+</div>
+        </div>
+    </div>
+    
+    <div class=search_param id=search_dates>
+        <input class="datepicker float date_input" id="date_from" name="startdate"></input>
+        <div class="float" id="from_to_arrow">&lt;--&gt;</div>
+        <input class="datepicker float date_input" id="date_to" name="enddate"></input>
+    </div>
+    
+    <div class=search_param id=search_location>
+        <div class="button" onClick="showMap()">location and radius</div>
+        <input type="hidden" class="gllpLatitude" name="lat"/>
+        <input type="hidden" class="gllpLongitude" name="lon"/>
+        <input type="hidden" class="gllpZoom" name="rad"/>
+        <div class="container">
+            <div class="outer">
+                <div class="inner" id="latlngpicker">
+                    <fieldset class="gllpLatlonPicker">
+                    <div class="gllpMap">Google Maps</div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id=search_buttons>
+        <input class="button_wide submit left" id="search_submit" name="search_submit" type="submit" value="Submit"/>
+        <!--<input class="button_wide reset right" id="search_reset" name="search_reset" type="submit" value="Reset"/>-->
+    </div>
+</form>
+</td>
+<td id="searchResults" class="v-top">
+No photos to display.
+</td>
+</tr></table>
+
+    </td>
+  </tr>
+</table>
+</td></tr>
+<tr><td>
+  <form method="GET" action="/photos/">
+  <div>
+  <input name="startdate"/>
+  </div>
+  <div>
+  <input class="button_wide submit left" id="search_submit" name="search_submit" type="submit" value="Submit"/>
+  </div>
+  </form>
+<table class=footer>
+  <tr><td><a href="/static/contact.html">Contact Me</a></td></tr>
+</table>
+</td></tr></table>
+</td></tr></table>

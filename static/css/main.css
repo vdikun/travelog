@@ -27,8 +27,6 @@ h6
 
 /* elements */
 
-/* stupid */
-
 html, body 
 { 
 	height: 100%
@@ -170,4 +168,21 @@ input
     left: 0;
     right: 0;
     bottom: 0;
+}
+
+/* photos */
+
+.photo_thumb
+{
+    height: 150px;
+    
+}
+
+/* test */
+
+.test
+{
+    padding: 10px;
+    border: 1px red solid;
+    background: #00efff;
 }

@@ -1,6 +1,6 @@
 """ views which are accessible only to owners """
 
-from flask import Blueprint, render_template, redirect, session, request, url_for, jsonify
+from flask import Blueprint, render_template, redirect, session, request, url_for, jsonify, flash
 from flask.ext.login import login_required, login_user, current_user, logout_user
 
 from forms import UploadPhotoForm, MakeViewersForm, SearchForm
@@ -55,8 +55,8 @@ def makeviewers():
         make_viewers(current_user, form.emails.data, form.password.data)
         try:
             email_new_viewers(current_user, form.emails.data, form.password.data)
-        except:
-            flash("Something went wrong! Maybe the viewers' emails are invalid.")
+        except Exception, e:
+            flash(e)
     return viewers()
 
 

@@ -18,6 +18,7 @@ from datetime import datetime
 
 def fileext(filename):
     return filename.rsplit(".")[-1].upper()
+
 def allowed_file(filename):
     ext = fileext(filename)
     if ext in ["JPG"]:
@@ -87,7 +88,7 @@ class PhotoList(restful.Resource):
             if not allowed_file(i.filename):
                 return 404, "Bad file extension"
             # Make the filename safe, remove unsupported chars
-            filename = secure_filename(i.filename)
+            filename = secure_filename(i.filename.upper())
 
             ### Well if you want to carry on with this you have to make sure
             ### that the file name origionally does not exist in this folder
